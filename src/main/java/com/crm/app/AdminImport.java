@@ -27,7 +27,8 @@ public class AdminImport implements ApplicationRunner {
         roleSuperAdmin.setRoleName("SuperAdmin");
 
         superAdmin.setUsername("superAdmin");
-        superAdmin.setPassword(encoder.encode("123"));
+        superAdmin.setEmail("sa@sa.de");
+        superAdmin.setPassword(encoder.encode("test123"));
         superAdmin.setRole(roleSuperAdmin);
 
         userRepository.save(superAdmin);
@@ -40,7 +41,7 @@ public class AdminImport implements ApplicationRunner {
 
         admin.setEmail("a@a.fr");
         admin.setUsername("admin");
-        admin.setPassword(encoder.encode("123"));
+        admin.setPassword(encoder.encode("test123"));
         admin.setRole(roleAdmin);
 
         userRepository.save(admin);

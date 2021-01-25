@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
 </head>
 <body>
 This is the index
+
+<h2>Welcome</h2>
+<p>Spring Security Thymeleaf tutorial</p>
+<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+<div sec:authorize="isAuthenticated()">
+    Text visible only to authenticated users.
+</div>
+Authenticated username:
+<div sec:authentication="name"></div>
+Authenticated user roles:
+
 
 <a href="/api/v1/contacts">Go to Contacts</a>
 </body>

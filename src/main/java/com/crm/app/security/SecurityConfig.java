@@ -1,5 +1,6 @@
 package com.crm.app.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,16 +11,37 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private LoggingAccessDeniedHandler accessDeniedHandler;
 
     // configuration of which page can be accessed
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/icons/**", "/css/**", "/js/**", "/h2/**", "templates/**", "/templates/login").permitAll()
-                .anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
-                .and().logout().logoutSuccessUrl("/").permitAll();
+        http.authorizeRequests()
+                .antMatchers(
+                        "/icons/**",
+                        "/css/**",
+                        "/js/**",
+                        "/h2/**",
+                        "/webjars/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                .and()
+                .logout()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/").permitAll()
+                .and()
+                .exceptionHandling()
+                    .accessDeniedHandler(accessDeniedHandler);
 
         http.csrf().disable();
         http.headers().frameOptions().disable();
@@ -35,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		//UserBuilder users = User();
 //
 //		auth.inMemoryAuthentication()
-//			.withUser(users.username("susan").password("test123").roles("ADMIN"));
+//			.withUser("testAdmin").password("password").roles("ADMIN");
 //	}
 
     // authentication provider

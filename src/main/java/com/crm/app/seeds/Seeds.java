@@ -38,6 +38,8 @@ public class Seeds implements CommandLineRunner {
         eric.setEmail("e@e.fr");
         eric.setFirstname("Eric");
         eric.setLastname("Dujardin");
+        eric.setUsername("eric");
+        eric.setPassword("eric");
         eric.setRole(admin);
         userRepository.save(eric);
         System.out.println(eric.getFirstname() + " " + eric.getLastname() + " with user_id: " + eric.getId() + " has been created as " + eric.getRole());
