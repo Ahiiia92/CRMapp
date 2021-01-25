@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form class="form form-login" action="/login" method="post">
+
+    <div class="container">
+
+        <label for="Username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+
+        <label for="psw"><b>Passwort</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+
+        <button type="submit" class="loginbtn">Login</button>
+    </div>
+
+    <!-- Checking for Login Error -->
+    <c:if test="${param.error != null}">
+        <i> Sorry! The username or password is incorrect</i>
+    </c:if>
+
+    <br>
+    <div class="container signin">
+        <p>Don't Have An Account? <a href="/register">Sign in</a>.</p>
+    </div>
+</form>
+</body>
+</html>

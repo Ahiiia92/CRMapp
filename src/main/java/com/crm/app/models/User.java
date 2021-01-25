@@ -1,21 +1,19 @@
 package com.crm.app.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "CRMUsers")
 public class User {
     @Id
     @GeneratedValue
+    @Column(name = "user_id")
     private Integer id;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String username;
-    private String password;
+    private String firstname, lastname, email, password, username;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     public User() {};
 
@@ -23,6 +21,21 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
+    }
+
+    public User(String email, String password, String username, Role role) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.role = role;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Integer getId() {
