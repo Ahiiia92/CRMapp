@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
     }
 
-//    // Create Some admin access
+    // Create Some admin access
 //    @Override
 //	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //
