@@ -3,7 +3,6 @@ package com.crm.app.controllers;
 import com.crm.app.models.Contact;
 import com.crm.app.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +23,8 @@ public class ContactController {
 
     // Show a specific Contact
     @GetMapping("/contacts/{id}")
-    public ResponseEntity<Contact> showcontact(@PathVariable Integer contactId) {
-        Contact contact = contactService.getContactById(contactId);
+    public ResponseEntity<Contact> showcontact(@PathVariable Integer id) {
+        Contact contact = contactService.getContactById(id);
         return ResponseEntity.ok().body(contact);
     }
 

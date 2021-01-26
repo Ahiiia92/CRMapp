@@ -1,19 +1,23 @@
 package com.crm.app.models;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "roles")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue
     @Column(name = "role_id")
     private Integer id;
     private String roleName;
+
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
+    private List<User> users;
 
     public Role() {};
 
@@ -27,6 +31,22 @@ public class Role implements GrantedAuthority {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override

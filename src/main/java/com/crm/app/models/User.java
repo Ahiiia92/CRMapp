@@ -1,9 +1,13 @@
 package com.crm.app.models;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "CRMUsers")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class User {
     @Id
     @GeneratedValue
@@ -11,11 +15,14 @@ public class User {
     private Integer id;
     private String firstname, lastname, email, password, username;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    private List<Contact> contacts;
+
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;
 
-    public User() {};
+    public User() { super(); };
 
     public User(String email, String username, String password) {
         this.email = email;
@@ -84,5 +91,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
     }
 }
