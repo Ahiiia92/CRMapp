@@ -3,6 +3,7 @@ package com.crm.app.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,44 +22,58 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // configuration of which page can be accessed
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.httpBasic()
+                .and()
+                .authorizeRequests()
                 .antMatchers(
                         "/icons/**",
+                        "/",
+                        "/login",
                         "/css/**",
                         "/js/**",
                         "/h2/**",
+                        "/api/v1/contacts",
                         "/webjars/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/api/v1/contacts").hasRole("SuperAdmin")
+//                .antMatchers(HttpMethod.GET, "/api/v1/contacts/**").hasRole("SuperAdmin")
+//                .antMatchers(HttpMethod.POST, "/api/v1/contacts/").hasRole("SuperAdmin")
+//                .antMatchers(HttpMethod.PUT, "/api/v1/contacts/**").hasRole("SuperAdmin")
+//                .antMatchers(HttpMethod.DELETE, "/api/v1/contacts/**").hasRole("SuperAdmin")
+//                .antMatchers("/api/v1/contacts/**").hasRole("Admin")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                .and()
-                .logout()
-                    .invalidateHttpSession(true)
-                    .clearAuthentication(true)
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/").permitAll()
-                .and()
+                    .disable()
+//                .and()
+//                .logout()
+//                    .invalidateHttpSession(true)
+//                    .clearAuthentication(true)
+//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                    .logoutSuccessUrl("/").permitAll()
+//                .and()
                 .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler);
 
         http.csrf().disable();
-        http.headers().frameOptions().disable();
+//        http.headers().frameOptions().disable();
     }
 
     // Create Some admin access
-//    @Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//
-//		// add our users for in memory authentication
-//        User.UserBuilder users = User.withDefaultPasswordEncoder();
-//
-//		//UserBuilder users = User();
-//
-//		auth.inMemoryAuthentication()
-//			.withUser("testAdmin").password("password").roles("ADMIN");
-//	}
+    @Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+		// add our users for in memory authentication
+        User.UserBuilder users = User.withDefaultPasswordEncoder();
+
+		//UserBuilder users = User();
+
+		auth.inMemoryAuthentication()
+			.withUser("testAdmin").password("password123").roles("Admin")
+                .and()
+			.withUser("testSuperAdmin").password("test123").roles("SuperAdmin")
+		        .and()
+			.withUser("admin").password("password123").roles("ADMIN");
+	}
 
     // authentication provider
     @Bean

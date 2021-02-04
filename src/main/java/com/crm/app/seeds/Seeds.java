@@ -39,7 +39,7 @@ public class Seeds implements CommandLineRunner {
         eric.setFirstname("Eric");
         eric.setLastname("Dujardin");
         eric.setUsername("eric");
-        eric.setPassword("eric");
+        eric.setPassword("eric123");
         eric.setRole(admin);
         userRepository.save(eric);
         System.out.println(eric.getFirstname() + " " + eric.getLastname() + " with user_id: " + eric.getId() + " has been created as " + eric.getRole());
@@ -47,14 +47,25 @@ public class Seeds implements CommandLineRunner {
         // Contact
         System.out.println("Creating fake contacts...");
         System.out.println("1...");
-        Contact marou = new Contact(faker.name().firstName(), faker.name().lastName());
-        marou.setCity(faker.address().city());
-        marou.setZipCode(faker.address().zipCode());
-        marou.setStreetname(faker.address().streetName());
-        marou.setContact_status(Contact_status.LEAD);
+        Contact u1 = new Contact(faker.name().firstName(), faker.name().lastName());
+        u1.setCity(faker.address().city());
+        u1.setZipCode(faker.address().zipCode());
+        u1.setStreetname(faker.address().streetName());
+        u1.setContact_status(Contact_status.LEAD);
         Optional<User> superAd = userRepository.findUserByUsername("superAdmin");
-        marou.setUser(superAd.get());
-        contactRepository.save(marou);
-        System.out.println("Contact 1: " + marou.getFirstName() + " with contact_id: " + marou.getId() + " has been created!");
+        u1.setUser(superAd.get());
+        contactRepository.save(u1);
+        System.out.println("Contact 1: " + u1.getFirstName() + " with contact_id: " + u1.getId() + " has been created!");
+
+        System.out.println("2...");
+        Contact u2 = new Contact(faker.name().firstName(), faker.name().lastName());
+        u2.setCity(faker.address().city());
+        u2.setZipCode(faker.address().zipCode());
+        u2.setStreetname(faker.address().streetName());
+        u2.setContact_status(Contact_status.OPPORTUNITY);
+        Optional<User> admin1 = userRepository.findUserByUsername("admin");
+        u2.setUser(admin1.get());
+        contactRepository.save(u2);
+        System.out.println("Contact 1: " + u2.getFirstName() + " with contact_id: " + u2.getId() + " has been created!");
     }
 }

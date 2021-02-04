@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.awt.*;
 import java.util.List;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/")
 public class AppController {
-    @Autowired
-    private UserDetailsService userService;
-
-    @Autowired
-    private ContactService contactService;
     // Index
     @GetMapping("/")
     public String home() {
