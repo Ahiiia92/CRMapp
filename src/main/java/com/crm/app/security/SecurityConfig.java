@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/css/**",
                         "/js/**",
                         "/h2/**",
-//                        "/api/v1/contacts",
                         "/webjars/**").permitAll()
+                // In order to authorize only some part of the API to certain users
 //                .antMatchers(HttpMethod.GET, "/api/v1/contacts").hasRole("SuperAdmin")
 //                .antMatchers(HttpMethod.GET, "/api/v1/contacts/**").hasRole("SuperAdmin")
 //                .antMatchers(HttpMethod.POST, "/api/v1/contacts/").hasRole("SuperAdmin")
