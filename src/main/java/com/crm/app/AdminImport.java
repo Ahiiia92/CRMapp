@@ -20,7 +20,7 @@ public class AdminImport implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        // SuperAdmin can manage all Users
+        // SuperAdmin can manage all Users = developer level
         User superAdmin = new User();
 
         Role roleSuperAdmin = new Role();

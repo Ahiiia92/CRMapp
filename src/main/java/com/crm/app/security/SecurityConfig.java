@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/css/**",
                         "/js/**",
                         "/h2/**",
-                        "/api/v1/contacts",
+//                        "/api/v1/contacts",
                         "/webjars/**").permitAll()
 //                .antMatchers(HttpMethod.GET, "/api/v1/contacts").hasRole("SuperAdmin")
 //                .antMatchers(HttpMethod.GET, "/api/v1/contacts/**").hasRole("SuperAdmin")
@@ -55,25 +55,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .accessDeniedHandler(accessDeniedHandler);
 
         http.csrf().disable();
-//        http.headers().frameOptions().disable();
+        http.headers().frameOptions().disable();
     }
 
     // Create Some admin access
-    @Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-		// add our users for in memory authentication
-        User.UserBuilder users = User.withDefaultPasswordEncoder();
-
-		//UserBuilder users = User();
-
-		auth.inMemoryAuthentication()
-			.withUser("testAdmin").password("password123").roles("Admin")
-                .and()
-			.withUser("testSuperAdmin").password("test123").roles("SuperAdmin")
-		        .and()
-			.withUser("admin").password("password123").roles("ADMIN");
-	}
+//    @Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//
+//		// add our users for in memory authentication
+//        User.UserBuilder users = User.withDefaultPasswordEncoder();
+//
+//		//UserBuilder users = User();
+//
+//		auth.inMemoryAuthentication()
+//			.withUser("testAdmin").password("password123").roles("Admin")
+//                .and()
+//			.withUser("testSuperAdmin").password("test123").roles("SuperAdmin")
+//		        .and()
+//			.withUser("admin").password("password123").roles("ADMIN");
+//	}
 
     // authentication provider
     @Bean
