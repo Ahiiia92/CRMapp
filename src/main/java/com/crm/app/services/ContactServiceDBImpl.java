@@ -57,4 +57,8 @@ public class ContactServiceDBImpl implements ContactService {
         Optional<Contact> contactToDelete = contactRepository.findById(id);
         contactRepository.delete(contactToDelete.get());
     }
+
+    public void setContactRepository(ContactRepository repo) {
+        this.contactRepository = repo;
+    }
 }

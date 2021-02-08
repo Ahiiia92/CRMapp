@@ -8,6 +8,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,9 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // configuration of which page can be accessed
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic()
-                .and()
-                .authorizeRequests()
+        http.csrf().disable()
+            .httpBasic()
+            .and()
+            .authorizeRequests()
                 .antMatchers(
                         "/icons/**",
                         "/",
@@ -34,28 +36,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/h2/**",
                         "/webjars/**").permitAll()
                 // In order to authorize only some part of the API to certain users
-//                .antMatchers(HttpMethod.GET, "/api/v1/contacts").hasRole("SuperAdmin")
+                .antMatchers(HttpMethod.GET, "/api/v1/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
+                .antMatchers(HttpMethod.PUT, "/api/v1/**").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/api/v1/**").authenticated()
 //                .antMatchers(HttpMethod.GET, "/api/v1/contacts/**").hasRole("SuperAdmin")
 //                .antMatchers(HttpMethod.POST, "/api/v1/contacts/").hasRole("SuperAdmin")
 //                .antMatchers(HttpMethod.PUT, "/api/v1/contacts/**").hasRole("SuperAdmin")
 //                .antMatchers(HttpMethod.DELETE, "/api/v1/contacts/**").hasRole("SuperAdmin")
 //                .antMatchers("/api/v1/contacts/**").hasRole("Admin")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                    .disable()
+//                .anyRequest().authenticated() // says all requests needs to be authenticated
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //                .and()
-//                .logout()
-//                    .invalidateHttpSession(true)
-//                    .clearAuthentication(true)
-//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                    .logoutSuccessUrl("/").permitAll()
-//                .and()
-                .exceptionHandling()
-                    .accessDeniedHandler(accessDeniedHandler);
-
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
+//                .formLogin()
+//                    .disable()
+////                .and()
+////                .logout()
+////                    .invalidateHttpSession(true)
+////                    .clearAuthentication(true)
+////                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+////                    .logoutSuccessUrl("/").permitAll()
+////                .and()
+//                .exceptionHandling()
+//                    .accessDeniedHandler(accessDeniedHandler);
+//        http.headers().frameOptions().disable();
     }
 
     // Create Some admin access
