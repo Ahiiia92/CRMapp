@@ -37,7 +37,7 @@ public class ContactServiceDBImpl implements ContactService {
     public Contact updateContact(Integer id, Contact contactDetails) {
         Optional<Contact> optContact = contactRepository.findById(id);
         if(optContact.isPresent()) {
-            optContact.get().setFirstName(contactDetails.getFirstName());
+            optContact.get().setFirstname(contactDetails.getFirstname());
             optContact.get().setLastname(contactDetails.getLastname());
             optContact.get().setStreetname(contactDetails.getStreetname());
             optContact.get().setZipCode(contactDetails.getZipCode());

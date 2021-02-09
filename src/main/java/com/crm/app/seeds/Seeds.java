@@ -55,7 +55,7 @@ public class Seeds implements CommandLineRunner {
         Optional<User> superAd = userRepository.findUserByUsername("superAdmin");
         u1.setUser(superAd.get());
         contactRepository.save(u1);
-        System.out.println("Contact 1: " + u1.getFirstName() + " with contact_id: " + u1.getId() + " has been created!");
+        System.out.println("Contact 1: " + u1.getFirstname() + " with contact_id: " + u1.getId() + " has been created!");
 
         System.out.println("2...");
         Contact u2 = new Contact(faker.name().firstName(), faker.name().lastName());
@@ -66,6 +66,6 @@ public class Seeds implements CommandLineRunner {
         Optional<User> admin1 = userRepository.findUserByUsername("admin");
         u2.setUser(admin1.get());
         contactRepository.save(u2);
-        System.out.println("Contact 1: " + u2.getFirstName() + " with contact_id: " + u2.getId() + " has been created!");
+        System.out.println("Contact 1: " + u2.getFirstname() + " with contact_id: " + u2.getId() + " has been created!");
     }
 }

@@ -70,9 +70,9 @@ class ContactControllerTest {
         // Create test data which’ll be returned as a response in the rest service.
         List<Contact> contacts = new ArrayList<>();
         Contact c1 = new Contact();
-        c1.setFirstName("testFirstname1");
+        c1.setFirstname("testFirstname1");
         Contact c2 = new Contact();
-        c2.setFirstName("testFirstname2");
+        c2.setFirstname("testFirstname2");
         contacts.add(c1);
         contacts.add(c2);
 

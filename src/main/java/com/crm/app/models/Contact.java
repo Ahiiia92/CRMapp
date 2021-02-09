@@ -49,11 +49,11 @@ public class Contact {
         this.id = id;
     }
 
-    public String getfirstname() {
+    public String getFirstname() {
         return firstname;
     }
 
-    public void setfirstname(String firstname) {
+    public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
