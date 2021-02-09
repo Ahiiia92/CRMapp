@@ -14,7 +14,7 @@ public class Contact {
     @GeneratedValue
     private Integer id;
 
-    private String firstName, lastname, streetname, zipCode, city, email;
+    private String firstname, lastname, streetname, zipCode, city, email;
     private Contact_status contact_status;
     private LocalDateTime created_at;
 
@@ -24,8 +24,8 @@ public class Contact {
 
     public Contact() { super(); }
 
-    public Contact(String firstName, String lastname, String streetname, String zipCode, String city, String email, Contact_status contact_status, LocalDateTime created_at, User user) {
-        this.firstName = firstName;
+    public Contact(String firstname, String lastname, String streetname, String zipCode, String city, String email, Contact_status contact_status, LocalDateTime created_at, User user) {
+        this.firstname = firstname;
         this.lastname = lastname;
         this.streetname = streetname;
         this.zipCode = zipCode;
@@ -36,8 +36,8 @@ public class Contact {
         this.user = user;
     }
 
-    public Contact(String firstName, String lastName) {
-        this.firstName = firstName;
+    public Contact(String firstname, String lastName) {
+        this.firstname = firstname;
         this.lastname = lastName;
     }
 
@@ -49,12 +49,12 @@ public class Contact {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getfirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setfirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastname() {

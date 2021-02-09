@@ -34,9 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/css/**",
                         "/js/**",
                         "/h2/**",
+                        "/api/v1/**",
                         "/webjars/**").permitAll()
                 // In order to authorize only some part of the API to certain users
-                .antMatchers(HttpMethod.GET, "/api/v1/**").authenticated()
+//                .antMatchers(HttpMethod.GET, "/api/v1/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
                 .antMatchers(HttpMethod.PUT, "/api/v1/**").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/api/v1/**").authenticated()
