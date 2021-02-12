@@ -43,7 +43,7 @@ public class ContactServiceDBImplTest {
         List<Contact> contacts = service.getAllContacts();
 
         assertEquals(contacts.size(), 1);
-        // verify the interaction with the mocks: That the repo was called onl once when .findAll is called.
+        // verify the interaction with the mocks: That the repo was called only once when .findAll is called.
         verify(repo, times(1)).findAll();
     }
 
