@@ -48,9 +48,7 @@ public class Seeds implements CommandLineRunner {
         System.out.println("Creating fake contacts...");
         System.out.println("1...");
         Contact u1 = new Contact(faker.name().firstName(), faker.name().lastName());
-        u1.setCity(faker.address().city());
-        u1.setZipCode(faker.address().zipCode());
-        u1.setStreetname(faker.address().streetName());
+        u1.setAddress(faker.address().fullAddress());
         u1.setContact_status(Contact_status.LEAD);
         Optional<User> superAd = userRepository.findUserByUsername("superAdmin");
         u1.setUser(superAd.get());
@@ -59,9 +57,7 @@ public class Seeds implements CommandLineRunner {
 
         System.out.println("2...");
         Contact u2 = new Contact(faker.name().firstName(), faker.name().lastName());
-        u2.setCity(faker.address().city());
-        u2.setZipCode(faker.address().zipCode());
-        u2.setStreetname(faker.address().streetName());
+        u2.setAddress(faker.address().fullAddress());
         u2.setContact_status(Contact_status.OPPORTUNITY);
         Optional<User> admin1 = userRepository.findUserByUsername("admin");
         u2.setUser(admin1.get());

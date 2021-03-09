@@ -2,6 +2,7 @@ package com.crm.app.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,9 +15,10 @@ public class Contact {
     @GeneratedValue
     private Integer id;
 
-    private String firstname, lastname, streetname, zipCode, city, email;
+    private String firstname, lastname, address, email;
     private Contact_status contact_status;
     private LocalDateTime created_at;
+    private Float lng, lat;
 
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
@@ -24,12 +26,10 @@ public class Contact {
 
     public Contact() { super(); }
 
-    public Contact(String firstname, String lastname, String streetname, String zipCode, String city, String email, Contact_status contact_status, LocalDateTime created_at, User user) {
+    public Contact(String firstname, String lastname, String address, String email, Contact_status contact_status, LocalDateTime created_at, User user) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.streetname = streetname;
-        this.zipCode = zipCode;
-        this.city = city;
+        this.address = address;
         this.email = email;
         this.contact_status = contact_status;
         this.created_at = created_at;
@@ -65,28 +65,12 @@ public class Contact {
         this.lastname = lastname;
     }
 
-    public String getStreetname() {
-        return streetname;
+    public String getAddress() {
+        return address;
     }
 
-    public void setStreetname(String streetname) {
-        this.streetname = streetname;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {

@@ -39,9 +39,7 @@ public class ContactServiceDBImpl implements ContactService {
         if(optContact.isPresent()) {
             optContact.get().setFirstname(contactDetails.getFirstname());
             optContact.get().setLastname(contactDetails.getLastname());
-            optContact.get().setStreetname(contactDetails.getStreetname());
-            optContact.get().setZipCode(contactDetails.getZipCode());
-            optContact.get().setCity(contactDetails.getCity());
+            optContact.get().setAddress(contactDetails.getAddress());
             optContact.get().setUser(contactDetails.getUser());
             optContact.get().setContact_status(contactDetails.getContact_status());
             optContact.get().setEmail(contactDetails.getEmail());
