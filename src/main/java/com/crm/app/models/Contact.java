@@ -15,6 +15,8 @@ public class Contact {
 
     private String firstname, lastname, address, email;
     private Contact_status contact_status;
+    // A contact is either a buyer or a seller
+    private Boolean buyer;
     private LocalDateTime created_at;
     private Float lng, lat;
 
