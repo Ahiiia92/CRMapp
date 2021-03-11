@@ -1,8 +1,6 @@
 package com.crm.app.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.mapbox.api.geocoding.v5.MapboxGeocoding;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

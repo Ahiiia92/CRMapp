@@ -62,16 +62,27 @@ public class Seeds implements CommandLineRunner {
         Optional<User> admin1 = userRepository.findUserByUsername("admin");
         u2.setUser(admin1.get());
         contactRepository.save(u2);
-        System.out.println("Contact é: " + u2.getFirstname() + " with contact_id: " + u2.getId() + " has been created!");
-        System.out.println("Creating some properties...");
-
+        System.out.println("Contact 2: " + u2.getFirstname() + " with contact_id: " + u2.getId() + " has been created!");
 
         // Property
         System.out.println("Creating some properties...");
+        System.out.println("Prop 1...");
         Property p1 = new Property(faker.company().name(), faker.number().numberBetween(1,6), faker.number().randomDouble(2,150_000, 2_500_000), faker.number().randomDouble(1, 25, 350));
         p1.setContact(u1);
         p1.setUser(eric);
         propertyRepository.save(p1);
         System.out.println("Property 1: " + p1.getTitle() + " with contact " + p1.getContact().getFirstname() + "and User: " + p1.getUser().getFirstname() + " has been added.");
+
+        System.out.println("Prop 2...");
+        Property p2 = new Property(
+                faker.company().name(),
+                faker.number().numberBetween(1,6),
+                faker.number().randomDouble(2,150_000, 2_500_000),
+                faker.number().randomDouble(1, 25, 350)
+        );
+        p2.setContact(u2);
+        p2.setUser(eric);
+        propertyRepository.save(p2);
+        System.out.println("Property 2: " + p2.getTitle() + " with contact " + p2.getContact().getFirstname() + "and User: " + p2.getUser().getFirstname() + " has been added.");
     }
 }
