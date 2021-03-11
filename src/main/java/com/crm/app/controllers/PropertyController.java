@@ -18,7 +18,7 @@ public class PropertyController {
     @Autowired
     private PropertyService propertyService;
 
-    @GetMapping
+    @GetMapping("/properties")
     public ResponseEntity<List<Property>> getAllProperty() {
         return ResponseEntity.ok().body(propertyService.findAll());
     }
