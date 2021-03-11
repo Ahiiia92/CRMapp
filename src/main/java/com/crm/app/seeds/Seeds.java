@@ -62,7 +62,9 @@ public class Seeds implements CommandLineRunner {
         Optional<User> admin1 = userRepository.findUserByUsername("admin");
         u2.setUser(admin1.get());
         contactRepository.save(u2);
-        System.out.println("Contact 1: " + u2.getFirstname() + " with contact_id: " + u2.getId() + " has been created!");
+        System.out.println("Contact é: " + u2.getFirstname() + " with contact_id: " + u2.getId() + " has been created!");
+        System.out.println("Creating some properties...");
+
 
         // Property
         System.out.println("Creating some properties...");
