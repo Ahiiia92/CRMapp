@@ -67,9 +67,16 @@ public class Seeds implements CommandLineRunner {
         // Property
         System.out.println("Creating some properties...");
         System.out.println("Prop 1...");
-        Property p1 = new Property(faker.company().name(), faker.number().numberBetween(1,6), faker.number().randomDouble(2,150_000, 2_500_000), faker.number().randomDouble(1, 25, 350));
+        Property p1 = new Property(
+                faker.company().name(),
+                faker.number().numberBetween(1,6),
+                faker.number().randomDouble(2,150_000, 2_500_000),
+                faker.number().randomDouble(1, 25, 350),
+                "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1650&q=80"
+        );
         p1.setContact(u1);
         p1.setUser(eric);
+        p1.setAddress(faker.address().fullAddress());
         propertyRepository.save(p1);
         System.out.println("Property 1: " + p1.getTitle() + " with contact " + p1.getContact().getFirstname() + "and User: " + p1.getUser().getFirstname() + " has been added.");
 
@@ -78,11 +85,13 @@ public class Seeds implements CommandLineRunner {
                 faker.company().name(),
                 faker.number().numberBetween(1,6),
                 faker.number().randomDouble(2,150_000, 2_500_000),
-                faker.number().randomDouble(1, 25, 350)
+                faker.number().randomDouble(1, 25, 350),
+                "https://images.unsplash.com/photo-1448630360428-65456885c650?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1347&q=80"
         );
         p2.setContact(u2);
         p2.setUser(eric);
+        p2.setAddress(faker.address().fullAddress());
         propertyRepository.save(p2);
-        System.out.println("Property 2: " + p2.getTitle() + " with contact " + p2.getContact().getFirstname() + "and User: " + p2.getUser().getFirstname() + " has been added.");
+        System.out.println("Property 2: " + p2.getTitle() + " (" + p2.getId() + ") with contact " + p2.getContact().getFirstname() + "and User: " + p2.getUser().getFirstname() + " has been added.");
     }
 }

@@ -6,11 +6,11 @@ import javax.persistence.*;
 public class Property {
     @Id
     @GeneratedValue
-    private Long id;
+    private Integer id;
 
-    private String title;
+    private String title, imagePath, address;
     private Integer room;
-    private Double prize, size;
+    private Double price, size;
 
     @ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "contact_id")
@@ -22,11 +22,32 @@ public class Property {
 
     public Property() {}
 
-    public Property(String title, Integer room, Double prize, Double size) {
+    public Property(String title, Integer room, Double price, Double size, String imagePath) {
         this.title = title;
         this.room = room;
-        this.prize = prize;
+        this.price = price;
         this.size = size;
+        this.imagePath = imagePath;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Contact getContact() {
@@ -61,12 +82,12 @@ public class Property {
         this.room = room;
     }
 
-    public Double getPrize() {
-        return prize;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setPrize(Double prize) {
-        this.prize = prize;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Double getSize() {
