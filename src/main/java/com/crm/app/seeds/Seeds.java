@@ -1,10 +1,8 @@
 package com.crm.app.seeds;
 
-import com.crm.app.models.Contact;
-import com.crm.app.models.Contact_status;
-import com.crm.app.models.Role;
-import com.crm.app.models.User;
+import com.crm.app.models.*;
 import com.crm.app.repositories.ContactRepository;
+import com.crm.app.repositories.PropertyRepository;
 import com.crm.app.repositories.UserRepository;
 import com.github.javafaker.Faker;
 
@@ -17,12 +15,14 @@ import java.util.Optional;
 public class Seeds implements CommandLineRunner {
     private ContactRepository contactRepository;
     private UserRepository userRepository;
+    private PropertyRepository propertyRepository;
 
     Faker faker = new Faker();
 
-    public Seeds(UserRepository userRepository, ContactRepository contactRepository) {
+    public Seeds(UserRepository userRepository, ContactRepository contactRepository, PropertyRepository propertyRepository) {
         this.contactRepository = contactRepository;
         this.userRepository = userRepository;
+        this.propertyRepository = propertyRepository;
     }
 
     @Override
@@ -63,5 +63,13 @@ public class Seeds implements CommandLineRunner {
         u2.setUser(admin1.get());
         contactRepository.save(u2);
         System.out.println("Contact 1: " + u2.getFirstname() + " with contact_id: " + u2.getId() + " has been created!");
+
+        // Property
+        System.out.println("Creating some properties...");
+        Property p1 = new Property(faker.company().name(), faker.number().numberBetween(1,6), faker.number().randomDouble(2,150_000, 2_500_000), faker.number().randomDouble(1, 25, 350));
+        p1.setContact(u1);
+        p1.setUser(eric);
+        propertyRepository.save(p1);
+        System.out.println("Property 1: " + p1.getTitle() + " with contact " + p1.getContact().getFirstname() + "and User: " + p1.getUser().getFirstname() + " has been added.");
     }
 }
