@@ -13,7 +13,7 @@ public class Contact {
     @GeneratedValue
     private Integer id;
 
-    private String firstname, lastname, address, email;
+    private String firstname, lastname, address, email, profession;
     private Contact_status contact_status;
     // A contact is either a buyer or a seller
     private Boolean buyer;
@@ -39,6 +39,14 @@ public class Contact {
     public Contact(String firstname, String lastName) {
         this.firstname = firstname;
         this.lastname = lastName;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
     }
 
     public Integer getId() {
