@@ -66,4 +66,10 @@ public class PropertyController {
         Property property = propertyService.getPropertyById(id);
         return ResponseEntity.ok().body(property);
     }
+
+    @PutMapping("/properties/{id}")
+    public ResponseEntity<Void> updateProperty(@PathVariable Integer id, @RequestBody Property property) throws ResourceNotFoundException {
+        Property propUpdated = propertyService.editProperty(id, property);
+        return ResponseEntity.accepted().build();
+    }
 }

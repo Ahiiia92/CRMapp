@@ -33,4 +33,14 @@ public class PropertyServiceDBImpl implements PropertyService {
             throw new ResourceNotFoundException("Property not found");
         }
     }
+
+    @Override
+    public Property editProperty(Integer id, Property property) throws ResourceNotFoundException {
+        Optional<Property> optProperty = repo.findById(id);
+        if (optProperty.isPresent()) {
+            return  repo.save(property);
+        } else {
+            throw new ResourceNotFoundException("Property not found");
+        }
+    }
 }
