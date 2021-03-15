@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Property Controller to manage properties in the CRM
@@ -67,9 +69,32 @@ public class PropertyController {
         return ResponseEntity.ok().body(property);
     }
 
+    /**
+     * Update a property
+     * @param id
+     * @param property
+     * @return 202 Status Code
+     * @throws ResourceNotFoundException
+     */
+
     @PutMapping("/properties/{id}")
     public ResponseEntity<Void> updateProperty(@PathVariable Integer id, @RequestBody Property property) throws ResourceNotFoundException {
         Property propUpdated = propertyService.editProperty(id, property);
         return ResponseEntity.accepted().build();
+    }
+
+    /**
+     * Delete a Property by Id
+     * @param id
+     * @return Key/value pair with "deleted : true"
+     * @throws ResourceNotFoundException
+     */
+
+    @DeleteMapping("/properties/{id}")
+    public ResponseEntity<Map<String, Boolean>> deleteProperty(@PathVariable Integer id) throws ResourceNotFoundException {
+        propertyService.deleteProperty(id);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("Deleted", Boolean.TRUE);
+        return ResponseEntity.ok().body(response);
     }
 }

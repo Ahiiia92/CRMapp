@@ -16,4 +16,6 @@ public interface PropertyService {
     Property getPropertyById(Integer id) throws ResourceNotFoundException;
 
     Property editProperty(Integer id, Property property) throws ResourceNotFoundException;
+
+    void deleteProperty(Integer id) throws ResourceNotFoundException;
 }

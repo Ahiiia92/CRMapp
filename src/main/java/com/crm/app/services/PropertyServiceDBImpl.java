@@ -43,4 +43,14 @@ public class PropertyServiceDBImpl implements PropertyService {
             throw new ResourceNotFoundException("Property not found");
         }
     }
+
+    @Override
+    public void deleteProperty(Integer id) throws ResourceNotFoundException {
+        Optional<Property> optionalProperty = repo.findById(id);
+        if (optionalProperty.isPresent()) {
+            repo.delete(optionalProperty.get());
+        } else {
+            throw new ResourceNotFoundException("Property not found");
+        }
+    }
 }
