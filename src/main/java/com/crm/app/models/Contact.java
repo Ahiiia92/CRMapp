@@ -14,7 +14,10 @@ public class Contact {
     private Integer id;
 
     private String firstname, lastname, address, email, profession;
+
+    @Enumerated(value = EnumType.STRING)
     private Contact_status contact_status;
+
     // A contact is either a buyer or a seller
     private Boolean buyer;
     private LocalDateTime created_at;
