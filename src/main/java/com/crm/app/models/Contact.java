@@ -1,9 +1,12 @@
 package com.crm.app.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Contacts")
@@ -23,25 +26,41 @@ public class Contact {
     private LocalDateTime created_at;
     private Float lng, lat;
 
+    // From Recipe to Comments : Recipe have many comments while this comment will have just one Recipe
+    // Unique set of comments
+    @JsonManagedReference // to avoid a loop effect inside our object, we need to defined both references
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contact") // with mappedBy = a property in comment will be called recipe
+    private Set<Comment> comments = new HashSet<>();
+
+
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
 
     public Contact() { super(); }
 
-    public Contact(String firstname, String lastname, String address, String email, Contact_status contact_status, LocalDateTime created_at, User user) {
+    public Contact(String firstname, String lastname, String address, String email, Contact_status contact_status, User user, String profession) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
         this.email = email;
         this.contact_status = contact_status;
-        this.created_at = created_at;
         this.user = user;
+        this.profession = profession;
+        this.created_at = LocalDateTime.now();
     }
 
-    public Contact(String firstname, String lastName) {
+    public Contact(String firstname, String lastname) {
         this.firstname = firstname;
-        this.lastname = lastName;
+        this.lastname = lastname;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getProfession() {
@@ -114,5 +133,24 @@ public class Contact {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", profession='" + profession + '\'' +
+                ", contact_status=" + contact_status +
+                ", buyer=" + buyer +
+                ", created_at=" + created_at +
+                ", lng=" + lng +
+                ", lat=" + lat +
+                ", comments=" + comments +
+                ", user=" + user +
+                '}';
     }
 }

@@ -27,8 +27,7 @@ public class ContactServiceDBImplTest {
         MockitoAnnotations.openMocks(this);
 
         // create contact service
-        service = new ContactServiceDBImpl();
-        service.setContactRepository(repo);
+        service = new ContactServiceDBImpl(repo);
     }
 
     @Test

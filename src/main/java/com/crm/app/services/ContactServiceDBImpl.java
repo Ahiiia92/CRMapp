@@ -4,6 +4,7 @@ import com.crm.app.exceptions.ContactNotFoundException;
 import com.crm.app.models.Contact;
 import com.crm.app.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,8 +12,11 @@ import java.util.Optional;
 
 @Component
 public class ContactServiceDBImpl implements ContactService {
-    @Autowired
     private ContactRepository contactRepository;
+
+    public ContactServiceDBImpl(@Qualifier("contactRepository") ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
     @Override
     public List<Contact> getAllContacts() {
@@ -54,9 +58,5 @@ public class ContactServiceDBImpl implements ContactService {
     public void deleteContact(Integer id) {
         Optional<Contact> contactToDelete = contactRepository.findById(id);
         contactRepository.delete(contactToDelete.get());
-    }
-
-    public void setContactRepository(ContactRepository repo) {
-        this.contactRepository = repo;
     }
 }

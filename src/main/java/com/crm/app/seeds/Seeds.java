@@ -1,28 +1,37 @@
 package com.crm.app.seeds;
 
 import com.crm.app.models.*;
+import com.crm.app.repositories.CommentRepository;
 import com.crm.app.repositories.ContactRepository;
 import com.crm.app.repositories.PropertyRepository;
 import com.crm.app.repositories.UserRepository;
 import com.github.javafaker.Faker;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class Seeds implements CommandLineRunner {
     private ContactRepository contactRepository;
     private UserRepository userRepository;
     private PropertyRepository propertyRepository;
+    private CommentRepository commentRepository;
 
     Faker faker = new Faker();
 
-    public Seeds(UserRepository userRepository, ContactRepository contactRepository, PropertyRepository propertyRepository) {
+    public Seeds(UserRepository userRepository,
+                 @Qualifier("contactRepository") ContactRepository contactRepository,
+                 PropertyRepository propertyRepository,
+                 @Qualifier("commentRepository") CommentRepository commentRepository) {
         this.contactRepository = contactRepository;
         this.userRepository = userRepository;
         this.propertyRepository = propertyRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -93,5 +102,17 @@ public class Seeds implements CommandLineRunner {
         p2.setAddress(faker.address().fullAddress());
         propertyRepository.save(p2);
         System.out.println("Property 2: " + p2.getTitle() + " (" + p2.getId() + ") with contact " + p2.getContact().getFirstname() + "and User: " + p2.getUser().getFirstname() + " has been added.");
+
+        // Comments
+        System.out.println("Creating some comments...");
+        Set<Comment> comments = new HashSet<>();
+        Comment co1 = new Comment();
+        comments.add(co1);
+        co1.setContent(faker.howIMetYourMother().quote());
+        commentRepository.save(co1);
+        u1.setComments(comments);
+        contactRepository.save(u1);
+        System.out.println("Comment 1: " + co1.getContent() + " with Contact: " + u1.getFirstname());
+        System.out.println(u1.toString());
     }
 }

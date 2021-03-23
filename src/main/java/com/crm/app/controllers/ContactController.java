@@ -14,8 +14,11 @@ import java.util.Map;
 @CrossOrigin
 @RequestMapping("api/v1/")
 public class ContactController {
-    @Autowired
-    private ContactService contactService;
+    private final ContactService contactService;
+
+    public ContactController(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     // Index
     // TODO: Mockito Test => Postman works with Admin + SuperAdmin
