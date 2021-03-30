@@ -58,6 +58,14 @@ public class Seeds implements CommandLineRunner {
         System.out.println("1...");
         Contact u1 = new Contact(faker.name().firstName(), faker.name().lastName());
         u1.setAddress(faker.address().fullAddress());
+        u1.setEmail(faker.internet().emailAddress());
+        u1.setOwner(true);
+        u1.setAmbassador(true);
+        u1.setChildren(faker.number().numberBetween(0,5));
+        u1.setProfession("Accountant");
+        u1.setPhone(faker.phoneNumber().phoneNumber());
+        u1.setSellingProject(true);
+//        u1.setOwnerSince(faker.date());
         u1.setContact_status(Contact_status.LEAD);
         Optional<User> superAd = userRepository.findUserByUsername("superAdmin");
         u1.setUser(superAd.get());

@@ -2,9 +2,11 @@ package com.crm.app.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.github.javafaker.DateAndTime;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,15 +18,17 @@ public class Contact {
     @GeneratedValue
     private Integer id;
 
-    private String firstname, lastname, address, email, profession;
+    private String firstname, lastname, address, email, profession, phone;
 
     @Enumerated(value = EnumType.STRING)
     private Contact_status contact_status;
 
     // A contact is either a buyer or a seller
-    private Boolean buyer;
+    private Boolean sellingProject, owner, ambassador;
     private LocalDateTime created_at;
-    private Float lng, lat;
+    // How many children have our contact
+    private Integer children;
+    private LocalDateTime ownerSince;
 
     // From Recipe to Comments : Recipe have many comments while this comment will have just one Recipe
     // Unique set of comments
@@ -61,6 +65,58 @@ public class Contact {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Boolean getSellingProject() {
+        return sellingProject;
+    }
+
+    public void setSellingProject(Boolean sellingProject) {
+        this.sellingProject = sellingProject;
+    }
+
+    public Boolean getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Boolean owner) {
+        this.owner = owner;
+    }
+
+    public Boolean getAmbassador() {
+        return ambassador;
+    }
+
+    public void setAmbassador(Boolean ambassador) {
+        this.ambassador = ambassador;
+    }
+
+    public Integer getChildren() {
+        return children;
+    }
+
+    public void setChildren(Integer children) {
+        this.children = children;
+    }
+
+    public LocalDateTime getOwnerSince() {
+        return ownerSince;
+    }
+
+    public void setOwnerSince(DateAndTime ownerSince) {
+        DateTimeFormatter inFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        CharSequence inDateStr = null;
+        this.ownerSince = LocalDateTime.parse(inDateStr, inFormat);
+        DateTimeFormatter outFormat = DateTimeFormatter.ofPattern("EEE, MMM d yyyy, KK:mm a");
     }
 
     public String getProfession() {
@@ -144,11 +200,14 @@ public class Contact {
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", profession='" + profession + '\'' +
+                ", phone='" + phone + '\'' +
                 ", contact_status=" + contact_status +
-                ", buyer=" + buyer +
+                ", sellingProject=" + sellingProject +
+                ", owner=" + owner +
+                ", ambassador=" + ambassador +
                 ", created_at=" + created_at +
-                ", lng=" + lng +
-                ", lat=" + lat +
+                ", children=" + children +
+                ", ownerSince=" + ownerSince +
                 ", comments=" + comments +
                 ", user=" + user +
                 '}';
