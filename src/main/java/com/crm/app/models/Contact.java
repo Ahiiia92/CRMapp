@@ -3,6 +3,9 @@ package com.crm.app.models;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.javafaker.DateAndTime;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,17 +16,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
+@ApiModel(description = "Class representing a contact in the application.")
 @Entity
 @Table(name = "Contacts")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Contact {
+    @ApiModelProperty(notes = "Unique identifier of the Contact.",
+            example = "1", required = true, position = 0)
     @Id
     @GeneratedValue
     private Integer id;
 
+    @ApiModelProperty(notes = "Firstname and lastname of the contact.",
+            example = "Jessica Abigail", required = true, position = 1)
     @Min(value = 3)
     @NotNull
-    private String firstname, lastname, address, profession, phone;
+    private String firstname, lastname, profession, phone;
+
+    @ApiModelProperty(notes = "Full address of the contqct",
+    example = "221B Backer Street NW1 6XE London", required = true, position = 3)
+    @NotNull
+    private String address;
+
+    @ApiModelProperty(notes = "")
+    private String website;
 
     @Email
     private String email;
@@ -48,7 +64,7 @@ public class Contact {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Contact() { super(); }
+    public Contact() { }
 
     public Contact(String firstname, String lastname, String address, String email, Contact_status contact_status, User user, String profession) {
         this.firstname = firstname;
@@ -64,6 +80,13 @@ public class Contact {
     public Contact(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
+    }
+
+    public Contact(@Min(value = 3) @NotNull String firstname, @Min(value = 3) @NotNull String lastname, String website, @Email String email) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.website = website;
+        this.email = email;
     }
 
     public Set<Comment> getComments() {
@@ -195,6 +218,18 @@ public class Contact {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public void setOwnerSince(LocalDateTime ownerSince) {
+        this.ownerSince = ownerSince;
     }
 
     @Override

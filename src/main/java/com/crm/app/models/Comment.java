@@ -1,18 +1,25 @@
 package com.crm.app.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 
+@ApiModel(description = "Class representing a comment in the application.")
 @Entity
 @Table
 public class Comment {
+    @ApiModelProperty(notes = "Unique identifier of the Comment.",
+            example = "1", required = true, position = 0)
     @Id
     @GeneratedValue
     private Integer id;
 
-    @Column(length = 300)
+    @ApiModelProperty(notes = "Notes about the contact.",
+            example = "Need to contact him again", required = false, position = 0)
+    @Column(length = 4000)
     private String content;
 
     @JsonBackReference
