@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.javafaker.DateAndTime;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -18,7 +21,12 @@ public class Contact {
     @GeneratedValue
     private Integer id;
 
-    private String firstname, lastname, address, email, profession, phone;
+    @Min(value = 3)
+    @NotNull
+    private String firstname, lastname, address, profession, phone;
+
+    @Email
+    private String email;
 
     @Enumerated(value = EnumType.STRING)
     private Contact_status contact_status;
@@ -35,7 +43,6 @@ public class Contact {
     @JsonManagedReference // to avoid a loop effect inside our object, we need to defined both references
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contact") // with mappedBy = a property in comment will be called recipe
     private Set<Comment> comments = new HashSet<>();
-
 
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
@@ -66,7 +73,6 @@ public class Contact {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
-
 
     public String getPhone() {
         return phone;
