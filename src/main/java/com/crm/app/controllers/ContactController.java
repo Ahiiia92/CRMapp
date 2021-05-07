@@ -2,7 +2,6 @@ package com.crm.app.controllers;
 
 import com.crm.app.models.Contact;
 import com.crm.app.services.ContactService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +20,13 @@ public class ContactController {
     }
 
     // Index
+    
     // TODO: Mockito Test => Postman works with Admin + SuperAdmin
     @GetMapping("/contacts")
-    public List<Contact> getContacts() { return contactService.getAllContacts(); }
+    public ResponseEntity<List<Contact>> getContacts() {
+        List<Contact> contacts = contactService.getAllContacts();
+        return ResponseEntity.ok().body(contacts);
+    }
 
     // Show a specific Contact
     // TODO: Mockito Test => Postman works with Admin + SuperAdmin
@@ -36,16 +39,26 @@ public class ContactController {
     // Add Contacts
     // TODO: Mockito Test => Postman works with Admin + SuperAdmin
     @PostMapping("/contacts")
-    public Contact createContact(@RequestBody Contact contact) {
-        return contactService.createContact(contact);
+    public ResponseEntity<Map<String, Boolean>> createContact(@RequestBody Contact contact) {
+        Contact contactCreated = contactService.createContact(contact);
+        Map<String, Boolean> response = new HashMap<>();
+        if (contactCreated != null) {
+            response.put("Contact created", Boolean.TRUE);
+        } else {
+            response.put("Contact created", Boolean.FALSE);
+        }
+
+        return ResponseEntity.status(201).body(response);
     }
 
     // Edit Contact
     // TODO: Mockito Test => Postman works with Admin + SuperAdmin
     @PutMapping("/contacts/{id}")
-    public ResponseEntity<Contact> editContact(@PathVariable Integer id, @RequestBody Contact contactDetails) {
+    public ResponseEntity<Map<String, Boolean>> editContact(@PathVariable Integer id, @RequestBody Contact contactDetails) {
         Contact updatedContact = contactService.updateContact(id, contactDetails);
-        return ResponseEntity.ok(updatedContact);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("Contacted Updated", Boolean.TRUE);
+        return ResponseEntity.status(201).body(response);
     }
 
     // Delete Contact
