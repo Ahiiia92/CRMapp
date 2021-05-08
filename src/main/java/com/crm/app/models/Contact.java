@@ -29,13 +29,15 @@ public class Contact {
 
     @ApiModelProperty(notes = "Firstname and lastname of the contact.",
             example = "Jessica Abigail", required = true, position = 1)
-    @Min(value = 3)
+    @Min(value = 3, message = "Too short entry")
     @NotNull
     private String firstname, lastname, profession, phone;
 
     @ApiModelProperty(notes = "Full address of the contqct",
-    example = "221B Backer Street NW1 6XE London", required = true, position = 3)
-    @NotNull
+            example = "221B Backer Street NW1 6XE London",
+            required = true,
+            position = 3)
+    @NotNull(message = "Can't be empty")
     private String address;
 
     @ApiModelProperty(notes = "")
