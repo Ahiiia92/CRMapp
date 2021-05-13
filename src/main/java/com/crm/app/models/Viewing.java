@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,8 +27,7 @@ public class Viewing {
         example = "TODO/ define DateTime format",
         required = true,
         position = 1)
-    @NotNull
-    private LocalDateTime viewingDate;
+    private Date viewingDate;
 
     @ApiModelProperty(notes = "Set of comments which is related to a viewing",
         required = true,
@@ -36,7 +36,7 @@ public class Viewing {
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contact")
     private Set<Comment> viewings = new HashSet<>();
 
-    public Viewing(@NotNull LocalDateTime viewingDate, Set<Comment> viewings) {
+    public Viewing(Date viewingDate, Set<Comment> viewings) {
         this.viewingDate = viewingDate;
         this.viewings = viewings;
     }
@@ -49,11 +49,11 @@ public class Viewing {
         this.id = id;
     }
 
-    public LocalDateTime getViewingDate() {
+    public Date getViewingDate() {
         return viewingDate;
     }
 
-    public void setViewingDate(LocalDateTime viewingDate) {
+    public void setViewingDate(Date viewingDate) {
         this.viewingDate = viewingDate;
     }
 

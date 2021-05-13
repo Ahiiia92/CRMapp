@@ -1,10 +1,7 @@
 package com.crm.app.seeds;
 
 import com.crm.app.models.*;
-import com.crm.app.repositories.CommentRepository;
-import com.crm.app.repositories.ContactRepository;
-import com.crm.app.repositories.PropertyRepository;
-import com.crm.app.repositories.UserRepository;
+import com.crm.app.repositories.*;
 import com.github.javafaker.Faker;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class Seeds implements CommandLineRunner {
@@ -21,17 +19,20 @@ public class Seeds implements CommandLineRunner {
     private UserRepository userRepository;
     private PropertyRepository propertyRepository;
     private CommentRepository commentRepository;
+    private ViewingRepository viewingRepository;
 
     Faker faker = new Faker();
 
     public Seeds(UserRepository userRepository,
                  @Qualifier("contactRepository") ContactRepository contactRepository,
                  PropertyRepository propertyRepository,
-                 @Qualifier("commentRepository") CommentRepository commentRepository) {
+                 @Qualifier("commentRepository") CommentRepository commentRepository,
+                 @Qualifier("viewingRepository") ViewingRepository viewingRepository) {
         this.contactRepository = contactRepository;
         this.userRepository = userRepository;
         this.propertyRepository = propertyRepository;
         this.commentRepository = commentRepository;
+        this.viewingRepository = viewingRepository;
     }
 
     @Override
@@ -122,5 +123,15 @@ public class Seeds implements CommandLineRunner {
         contactRepository.save(u1);
         System.out.println("Comment 1: " + co1.getContent() + " with Contact: " + u1.getFirstname());
         System.out.println(u1.toString());
+
+        // Viewings
+        System.out.println("Creating some viewings");
+        Viewing viewing1 = new Viewing(
+                faker.date().future(2, TimeUnit.SECONDS),
+                comments
+                );
+        System.out.println(viewing1);
+        viewingRepository.save(viewing1);
+        System.out.println("Viewing 1: " + viewing1.getViewings() + " with date: " + viewing1.getViewingDate());
     }
 }
