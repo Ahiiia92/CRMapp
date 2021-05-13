@@ -33,7 +33,7 @@ public class Contact {
     @NotNull
     private String firstname, lastname, profession, phone;
 
-    @ApiModelProperty(notes = "Full address of the contqct",
+    @ApiModelProperty(notes = "Full address of the contact",
             example = "221B Backer Street NW1 6XE London",
             required = true,
             position = 3)
@@ -56,10 +56,10 @@ public class Contact {
     private Integer children;
     private LocalDateTime ownerSince;
 
-    // From Recipe to Comments : Recipe have many comments while this comment will have just one Recipe
+    // From Contact to Comments : Contact have many comments while this comment will have just one Contact
     // Unique set of comments
     @JsonManagedReference // to avoid a loop effect inside our object, we need to defined both references
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contact") // with mappedBy = a property in comment will be called recipe
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contact") // with mappedBy = a property in comment will be called contact
     private Set<Comment> comments = new HashSet<>();
 
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)

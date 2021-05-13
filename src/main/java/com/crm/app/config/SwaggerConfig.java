@@ -30,7 +30,7 @@ public class SwaggerConfig {
                 "1.0",
                 "Terms of Service",
                 new Contact("Maroussia Arnault", "https://www.maroussiaarnault.com",
-                        "contact@maroussiaarnault.com"),
+                        "contact@maroussiaarnault.com").toString(),
                 "Apache License Version 2.0",
                 "https://www.apache.org/licenses/"
         );
@@ -39,7 +39,7 @@ public class SwaggerConfig {
     }
 
     private class Contact {
-        public Contact(String name, String website, String email) {
+        public Contact(String name, String email, String website) {
         }
     }
 }

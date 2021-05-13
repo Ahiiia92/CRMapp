@@ -3,7 +3,6 @@ package com.crm.app.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 
@@ -11,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table
 public class Comment {
-    @ApiModelProperty(notes = "Unique identifier of the Comment.",
+    @ApiModelProperty(notes = "Unique identifier of the Comment",
             example = "1", required = true, position = 0)
     @Id
     @GeneratedValue
@@ -25,6 +24,10 @@ public class Comment {
     @JsonBackReference
     @ManyToOne
     private Contact contact;
+
+    @JsonBackReference
+    @ManyToOne
+    private Viewing viewing;
 
     public Comment() {}
 
