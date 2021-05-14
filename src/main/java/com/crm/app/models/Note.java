@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
-@ApiModel(description = "Class representing a comment in the application.")
+@ApiModel(description = "Class representing a note in the application.")
 @Entity
 @Table
 public class Comment {
