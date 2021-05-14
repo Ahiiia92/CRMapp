@@ -16,10 +16,10 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("api/v1/contacts/{id}/")
-public class VieweingController {
+public class ViewingController {
     private final ViewingService viewingService;
 
-    public VieweingController(ViewingService viewingService) { this.viewingService = viewingService; }
+    public ViewingController(ViewingService viewingService) { this.viewingService = viewingService; }
 
     @ApiOperation(value = "Retrieving all viewings", tags = { "viewings" })
     @ApiResponses(value = {
@@ -39,7 +39,7 @@ public class VieweingController {
         Map<String, Boolean> response = new HashMap<>();
         if (viewingCreated == null) throw new NoViewingException("The viewing with id " + viewing.getId() + "can't be found.");
 
-        response.put("Viewing creqted", Boolean.TRUE);
+        response.put("Viewing created", Boolean.TRUE);
         return ResponseEntity.status(201).body(response);
     }
 }
