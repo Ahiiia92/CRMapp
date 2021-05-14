@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +25,7 @@ public class Viewing {
         example = "TODO: define DateTime format",
         required = true,
         position = 1)
-    private Date viewingDate;
+    private LocalDateTime viewingDate;
 
     @ApiModelProperty(notes = "Set of notes which is related to a viewing",
         required = true,
@@ -33,7 +34,7 @@ public class Viewing {
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contact")
     private Set<Note> notes = new HashSet<>();
 
-    public Viewing(Date viewingDate, Set<Note> notes) {
+    public Viewing(LocalDateTime viewingDate, Set<Note> notes) {
         this.viewingDate = viewingDate;
         this.notes = notes;
     }
@@ -46,11 +47,11 @@ public class Viewing {
         this.id = id;
     }
 
-    public Date getViewingDate() {
+    public LocalDateTime getViewingDate() {
         return viewingDate;
     }
 
-    public void setViewingDate(Date viewingDate) {
+    public void setViewingDate(LocalDateTime viewingDate) {
         this.viewingDate = viewingDate;
     }
 
