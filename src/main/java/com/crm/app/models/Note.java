@@ -1,5 +1,6 @@
 package com.crm.app.models;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,8 +10,8 @@ import javax.persistence.*;
 @ApiModel(description = "Class representing a note in the application.")
 @Entity
 @Table
-public class Comment {
-    @ApiModelProperty(notes = "Unique identifier of the Comment",
+public class Note {
+    @ApiModelProperty(notes = "Unique identifier of the Note",
             example = "1", required = true, position = 0)
     @Id
     @GeneratedValue
@@ -29,9 +30,9 @@ public class Comment {
     @ManyToOne
     private Viewing viewing;
 
-    public Comment() {}
+    public Note() {}
 
-    public Comment(String content, Contact contact) {
+    public Note(String content, Contact contact) {
         this.content = content;
         this.contact = contact;
     }
@@ -46,10 +47,11 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment{" +
+        return "Note{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", contact=" + contact +
                 '}';
     }
 }
+

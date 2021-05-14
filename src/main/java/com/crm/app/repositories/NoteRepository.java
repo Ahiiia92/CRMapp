@@ -1,9 +1,9 @@
 package com.crm.app.repositories;
 
-import com.crm.app.models.Comment;
+import com.crm.app.models.Note;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("noteRepository")
-public interface CommentRepository extends JpaRepository<Comment, Integer> {
+@Repository
+public interface NoteRepository extends JpaRepository<Note, Integer> {
 }

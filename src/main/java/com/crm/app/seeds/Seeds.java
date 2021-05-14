@@ -15,23 +15,23 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class Seeds implements CommandLineRunner {
-    private ContactRepository contactRepository;
-    private UserRepository userRepository;
-    private PropertyRepository propertyRepository;
-    private CommentRepository commentRepository;
-    private ViewingRepository viewingRepository;
+    private final ContactRepository contactRepository;
+    private final UserRepository userRepository;
+    private final PropertyRepository propertyRepository;
+    private final NoteRepository noteRepository;
+    private final ViewingRepository viewingRepository;
 
     Faker faker = new Faker();
 
     public Seeds(UserRepository userRepository,
                  @Qualifier("contactRepository") ContactRepository contactRepository,
                  PropertyRepository propertyRepository,
-                 @Qualifier("commentRepository") CommentRepository commentRepository,
+                 @Qualifier("noteRepository") NoteRepository noteRepository,
                  @Qualifier("viewingRepository") ViewingRepository viewingRepository) {
         this.contactRepository = contactRepository;
         this.userRepository = userRepository;
         this.propertyRepository = propertyRepository;
-        this.commentRepository = commentRepository;
+        this.noteRepository = noteRepository;
         this.viewingRepository = viewingRepository;
     }
 
@@ -112,26 +112,26 @@ public class Seeds implements CommandLineRunner {
         propertyRepository.save(p2);
         System.out.println("Property 2: " + p2.getTitle() + " (" + p2.getId() + ") with contact " + p2.getContact().getFirstname() + "and User: " + p2.getUser().getFirstname() + " has been added.");
 
-        // Comments
-        System.out.println("Creating some comments...");
-        Set<Comment> comments = new HashSet<>();
-        Comment co1 = new Comment();
-        comments.add(co1);
+        // Notes
+        System.out.println("Creating some notes...");
+        Set<Note> notes = new HashSet<>();
+        Note co1 = new Note();
+        notes.add(co1);
         co1.setContent(faker.howIMetYourMother().quote());
-        commentRepository.save(co1);
-        u1.setComments(comments);
+        noteRepository.save(co1);
+        u1.setNotes(notes);
         contactRepository.save(u1);
-        System.out.println("Comment 1: " + co1.getContent() + " with Contact: " + u1.getFirstname());
+        System.out.println("Note 1: " + co1.getContent() + " with Contact: " + u1.getFirstname());
         System.out.println(u1.toString());
 
         // Viewings
         System.out.println("Creating some viewings");
         Viewing viewing1 = new Viewing(
                 faker.date().future(2, TimeUnit.SECONDS),
-                comments
+                notes
                 );
         System.out.println(viewing1);
         viewingRepository.save(viewing1);
-        System.out.println("Viewing 1: " + viewing1.getComments() + " with date: " + viewing1.getViewingDate());
+        System.out.println("Viewing 1: " + viewing1.getNotes() + " with date: " + viewing1.getViewingDate());
     }
 }

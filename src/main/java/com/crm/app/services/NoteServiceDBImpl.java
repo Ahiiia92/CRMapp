@@ -3,5 +3,5 @@ package com.crm.app.services;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommentServiceDBImpl implements CommentService {
+public class NoteServiceDBImpl implements NoteService {
 }

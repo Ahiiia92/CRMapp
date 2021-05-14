@@ -3,11 +3,8 @@ package com.crm.app.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,21 +21,21 @@ public class Viewing {
     private Integer id;
 
     @ApiModelProperty(notes = "Date of the viewing",
-        example = "TODO/ define DateTime format",
+        example = "TODO: define DateTime format",
         required = true,
         position = 1)
     private Date viewingDate;
 
-    @ApiModelProperty(notes = "Set of comments which is related to a viewing",
+    @ApiModelProperty(notes = "Set of notes which is related to a viewing",
         required = true,
         position = 2)
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contact")
-    private Set<Comment> comments = new HashSet<>();
+    private Set<Note> notes = new HashSet<>();
 
-    public Viewing(Date viewingDate, Set<Comment> viewings) {
+    public Viewing(Date viewingDate, Set<Note> notes) {
         this.viewingDate = viewingDate;
-        this.comments = viewings;
+        this.notes = notes;
     }
 
     public Integer getId() {
@@ -57,11 +54,11 @@ public class Viewing {
         this.viewingDate = viewingDate;
     }
 
-    public Set<Comment> getComments() {
-        return comments;
+    public Set<Note> getNotes() {
+        return notes;
     }
 
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
+    public void setComments(Set<Note> notes) {
+        this.notes = notes;
     }
 }
