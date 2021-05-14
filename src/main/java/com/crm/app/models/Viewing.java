@@ -34,11 +34,11 @@ public class Viewing {
         position = 2)
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contact")
-    private Set<Comment> viewings = new HashSet<>();
+    private Set<Comment> comments = new HashSet<>();
 
     public Viewing(Date viewingDate, Set<Comment> viewings) {
         this.viewingDate = viewingDate;
-        this.viewings = viewings;
+        this.comments = viewings;
     }
 
     public Integer getId() {
@@ -57,11 +57,11 @@ public class Viewing {
         this.viewingDate = viewingDate;
     }
 
-    public Set<Comment> getViewings() {
-        return viewings;
+    public Set<Comment> getComments() {
+        return comments;
     }
 
-    public void setViewings(Set<Comment> viewings) {
-        this.viewings = viewings;
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }
