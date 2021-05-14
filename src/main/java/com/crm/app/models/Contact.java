@@ -2,17 +2,16 @@ package com.crm.app.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.github.javafaker.DateAndTime;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,7 +30,11 @@ public class Contact {
             example = "Jessica Abigail", required = true, position = 1)
     @Min(value = 3, message = "Too short entry")
     @NotNull
-    private String firstname, lastname, profession, phone;
+    private String firstname, lastname;
+
+    @ApiModelProperty(notes = "Job and phone number of the contact.",
+            example = "Doctor", required = false, position = 2)
+    private String profession, phone;
 
     @ApiModelProperty(notes = "Full address of the contact",
             example = "221B Backer Street NW1 6XE London",
@@ -40,21 +43,32 @@ public class Contact {
     @NotNull(message = "Can't be empty")
     private String address;
 
-    @ApiModelProperty(notes = "")
-    private String website;
+    @ApiModelProperty(notes = "Timestamp of the contact creation date", required = true)
+    @CreatedDate
+    private Instant created_at;
+
+    // within the contact view, the last viewing Date should be displayed
+    private LocalDateTime nextViewingDate;
+
+    @ApiModelProperty(notes = "Check if there is a doorbell or not", required = true)
+    // A contact is either a buyer or a seller
+    private Boolean sellingProject, owner, ambassador, doorBell;
 
     @Email
     private String email;
 
     @Enumerated(value = EnumType.STRING)
+    private SocialMedia socialMedia;
+
+    @Enumerated(value = EnumType.STRING)
     private Contact_status contact_status;
 
-    // A contact is either a buyer or a seller
-    private Boolean sellingProject, owner, ambassador;
-    private LocalDateTime created_at;
     // How many children have our contact
+    @ApiModelProperty(notes = "Check if there is a doorbell or not", required = false)
     private Integer children;
-    private LocalDateTime ownerSince;
+
+    @DateTimeFormat(pattern = "dd LLL. yyyy")
+    private LocalDate ownerSince;
 
     // From Contact to Comments : Contact have many comments while this comment will have just one Contact
     // Unique set of comments
@@ -76,7 +90,7 @@ public class Contact {
         this.contact_status = contact_status;
         this.user = user;
         this.profession = profession;
-        this.created_at = LocalDateTime.now();
+        this.created_at = Instant.now();
     }
 
     public Contact(String firstname, String lastname) {
@@ -84,11 +98,34 @@ public class Contact {
         this.lastname = lastname;
     }
 
-    public Contact(@Min(value = 3) @NotNull String firstname, @Min(value = 3) @NotNull String lastname, String website, @Email String email) {
+    public Contact(@Min(value = 3) @NotNull String firstname, @Min(value = 3) @NotNull String lastname, @Email String email) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.website = website;
         this.email = email;
+    }
+
+    public Instant getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at() {
+        this.created_at = Instant.now();
+    }
+
+    public LocalDateTime getNextViewingDate() {
+        return nextViewingDate;
+    }
+
+    public void setNextViewingDate(LocalDateTime nextViewingDate) {
+        this.nextViewingDate = nextViewingDate;
+    }
+
+    public Boolean getDoorBell() {
+        return doorBell;
+    }
+
+    public void setDoorBell(Boolean doorBell) {
+        this.doorBell = doorBell;
     }
 
     public Set<Note> getNotes() {
@@ -139,15 +176,12 @@ public class Contact {
         this.children = children;
     }
 
-    public LocalDateTime getOwnerSince() {
+    public LocalDate getOwnerSince() {
         return ownerSince;
     }
 
-    public void setOwnerSince(DateAndTime ownerSince) {
-        DateTimeFormatter inFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        CharSequence inDateStr = null;
-        this.ownerSince = LocalDateTime.parse(inDateStr, inFormat);
-        DateTimeFormatter outFormat = DateTimeFormatter.ofPattern("EEE, MMM d yyyy, KK:mm a");
+    public void setOwnerSince(LocalDate ownerSince) {
+        this.ownerSince = ownerSince;
     }
 
     public String getProfession() {
@@ -206,32 +240,12 @@ public class Contact {
         this.contact_status = contact_status;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public void setOwnerSince(LocalDateTime ownerSince) {
-        this.ownerSince = ownerSince;
     }
 
     @Override

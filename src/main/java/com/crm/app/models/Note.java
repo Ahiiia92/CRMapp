@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @ApiModel(description = "Class representing a note in the application.")
 @Entity
@@ -27,10 +27,10 @@ public class Note {
 
     @ApiModelProperty(notes = "Creation date of a note", required = true, position = 1)
     @NotNull
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     @ApiModelProperty(notes = "Due date for a viewing", required = false, position = 2)
-    private Date dueDate;
+    private LocalDateTime dueDate;
 
     @JsonBackReference
     @ManyToOne
@@ -55,19 +55,19 @@ public class Note {
         this.content = content;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setCreationDate() {
+        this.creationDate = LocalDateTime.now();
     }
 
-    public Date getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 

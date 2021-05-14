@@ -9,7 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
+import java.time.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
@@ -69,12 +69,14 @@ public class Seeds implements CommandLineRunner {
         u1.setProfession("Accountant");
         u1.setPhone(faker.phoneNumber().phoneNumber());
         u1.setSellingProject(true);
-//        u1.setOwnerSince(faker.date());
-        u1.setContact_status(Contact_status.LEAD);
+        u1.setOwnerSince(LocalDate.of(1997, 04,15));
+        u1.setCreated_at();
+        u1.setContact_status(Contact_status.SEEN);
         Optional<User> superAd = userRepository.findUserByUsername("superAdmin");
         u1.setUser(superAd.get());
         contactRepository.save(u1);
         System.out.println("Contact 1: " + u1.getFirstname() + " with contact_id: " + u1.getId() + " has been created!");
+        System.out.println(u1.toString());
 
         System.out.println("2...");
         Contact u2 = new Contact(faker.name().firstName(), faker.name().lastName());
@@ -122,8 +124,8 @@ public class Seeds implements CommandLineRunner {
         notes.add(no1);
         no1.setContent(faker.howIMetYourMother().quote());
         no1.setContact(u1);
-        no1.setCreationDate(Date.from(Instant.now()));
-        no1.setDueDate(faker.date().future(2, TimeUnit.HOURS));
+        no1.setCreationDate();
+        no1.setDueDate(LocalDateTime.of(2021, 6, 21, 14, 30));
         noteRepository.save(no1);
         u1.setNotes(notes);
         contactRepository.save(u1);
@@ -133,7 +135,7 @@ public class Seeds implements CommandLineRunner {
         // Viewings
         System.out.println("Creating some viewings");
         Viewing viewing1 = new Viewing(
-                faker.date().future(2, TimeUnit.SECONDS),
+                LocalDateTime.of(2021, Month.JULY, 25, 15, 30),
                 notes
                 );
         System.out.println(viewing1);
