@@ -132,6 +132,6 @@ public class Seeds implements CommandLineRunner {
                 );
         System.out.println(viewing1);
         viewingRepository.save(viewing1);
-        System.out.println("Viewing 1: " + viewing1.getViewings() + " with date: " + viewing1.getViewingDate());
+        System.out.println("Viewing 1: " + viewing1.getComments() + " with date: " + viewing1.getViewingDate());
     }
 }
