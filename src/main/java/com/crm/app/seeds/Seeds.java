@@ -6,8 +6,11 @@ import com.github.javafaker.Faker;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -115,13 +118,16 @@ public class Seeds implements CommandLineRunner {
         // Notes
         System.out.println("Creating some notes...");
         Set<Note> notes = new HashSet<>();
-        Note co1 = new Note();
-        notes.add(co1);
-        co1.setContent(faker.howIMetYourMother().quote());
-        noteRepository.save(co1);
+        Note no1 = new Note();
+        notes.add(no1);
+        no1.setContent(faker.howIMetYourMother().quote());
+        no1.setContact(u1);
+        no1.setCreationDate(Date.from(Instant.now()));
+        no1.setDueDate(faker.date().future(2, TimeUnit.HOURS));
+        noteRepository.save(no1);
         u1.setNotes(notes);
         contactRepository.save(u1);
-        System.out.println("Note 1: " + co1.getContent() + " with Contact: " + u1.getFirstname());
+        System.out.println("Note 1: " + no1.getContent() + " with Contact: " + u1.getFirstname());
         System.out.println(u1.toString());
 
         // Viewings
