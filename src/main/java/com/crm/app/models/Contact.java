@@ -24,6 +24,7 @@ public class Contact {
             example = "1", required = true, position = 0)
     @Id
     @GeneratedValue
+    @Column(name = "contact_id")
     private Integer id;
 
     @ApiModelProperty(notes = "Firstname and lastname of the contact.",

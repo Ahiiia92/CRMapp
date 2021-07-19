@@ -6,6 +6,7 @@ import javax.persistence.*;
 public class Property {
     @Id
     @GeneratedValue
+    @Column(name = "property_id")
     private Integer id;
 
     private String title, imagePath, address;
