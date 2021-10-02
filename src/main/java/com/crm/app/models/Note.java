@@ -11,22 +11,23 @@ import java.time.LocalDateTime;
 
 @ApiModel(description = "Class representing a note in the application.")
 @Entity
-@Table
+@Table(name = "Notes")
 public class Note {
     @ApiModelProperty(notes = "Unique identifier of the Note",
             example = "1", required = true, position = 0)
     @Id
     @GeneratedValue
+    @Column(name = "note_id")
     private Integer id;
 
     @ApiModelProperty(notes = "Content of a note about a contact or a viewing.",
             example = "Need to contact him again", required = true, position = 0)
     @Column(length = 4000)
-    @NotNull
+    @NotNull(message = "Can't be empty")
     private String content;
 
     @ApiModelProperty(notes = "Creation date of a note", required = true, position = 1)
-    @NotNull
+    @NotNull(message = "Can't be empty")
     private LocalDateTime creationDate;
 
     @ApiModelProperty(notes = "Due date for a viewing", required = false, position = 2)
