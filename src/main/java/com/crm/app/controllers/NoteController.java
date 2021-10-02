@@ -22,6 +22,7 @@ public class NoteController {
         this.noteService = noteService;
     }
 
+    // TODO: Need to be tested as SHOW method is missing for Viewing
     @GetMapping("")
     public ResponseEntity<List<Note>> getNotes() {
         List<Note> notes = noteService.getAllNotes();
