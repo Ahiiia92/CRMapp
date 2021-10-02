@@ -73,9 +73,9 @@ public class Contact {
 
     // From Contact to Comments : Contact have many comments while this comment will have just one Contact
     // Unique set of comments
-    @JsonManagedReference // to avoid a loop effect inside our object, we need to defined both references
+/*    @JsonManagedReference // to avoid a loop effect inside our object, we need to defined both references
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contact") // with mappedBy = a property in comment will be called contact
-    private Set<Note> notes = new HashSet<>();
+    private Set<Note> notes = new HashSet<>();*/
 
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
@@ -129,6 +129,7 @@ public class Contact {
         this.doorBell = doorBell;
     }
 
+/*
     public Set<Note> getNotes() {
         return notes;
     }
@@ -136,6 +137,7 @@ public class Contact {
     public void setNotes(Set<Note> notes) {
         this.notes = notes;
     }
+*/
 
     public String getPhone() {
         return phone;
@@ -266,7 +268,7 @@ public class Contact {
                 ", created_at=" + created_at +
                 ", children=" + children +
                 ", ownerSince=" + ownerSince +
-                ", notes=" + notes +
+/*                ", notes=" + notes +*/
                 ", user=" + user +
                 '}';
     }

@@ -127,7 +127,7 @@ public class Seeds implements CommandLineRunner {
         no1.setCreationDate();
         no1.setDueDate(LocalDateTime.of(2021, 6, 21, 14, 30));
         noteRepository.save(no1);
-        u1.setNotes(notes);
+        /*u1.setNotes(notes);*/
         contactRepository.save(u1);
         System.out.println("Note 1: " + no1.getContent() + " with Contact: " + u1.getFirstname());
         System.out.println(u1.toString());

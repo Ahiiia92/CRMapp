@@ -86,7 +86,7 @@ public class ContactController {
         Contact updatedContact = contactService.updateContact(id, contactDetails);
         Map<String, Boolean> response = new HashMap<>();
         if(updatedContact == null) {
-            response.put("Contacted Updated", Boolean.FALSE);
+            response.put("Contact Updated", Boolean.FALSE);
             return ResponseEntity.noContent().build();
         }
 
