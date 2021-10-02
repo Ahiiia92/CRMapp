@@ -42,4 +42,6 @@ public class ViewingController {
         response.put("Viewing created", Boolean.TRUE);
         return ResponseEntity.status(201).body(response);
     }
+
+    // TODO: Create the SHOW Method for Viewing so that we can create a note
 }
