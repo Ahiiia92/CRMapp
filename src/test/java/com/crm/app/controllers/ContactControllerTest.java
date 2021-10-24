@@ -80,12 +80,12 @@ class ContactControllerTest {
         when(contactService.getAllContacts()).thenReturn(contacts);
 
         // invoke an HTTP GET request to the /api/v1/contacts URI
-        mockMvc.perform(get("/contacts"))
+        mockMvc.perform(get("http://localhost:8088/api/v1/contacts"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0].username", is("testFirstname1")))
-        .andExpect(jsonPath("$[1].username", is("testFirstname2")));
+        .andExpect(jsonPath("$[0].firstname", is("testFirstname1")))
+        .andExpect(jsonPath("$[1].firstname", is("testFirstname2")));
         verify(contactService, times(1)).getAllContacts();
         verifyNoMoreInteractions(contactService);
     }
