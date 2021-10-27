@@ -3,10 +3,10 @@ package com.crm.app.services;
 import javassist.bytecode.ByteArray;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Service
 public interface ExportService {
-    ByteArray generateXlsxReport();
-    ByteArray generateXlsReport() throws IOException;
+    void export(HttpServletResponse response) throws IOException;
 }
