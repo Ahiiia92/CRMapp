@@ -3,15 +3,18 @@ package com.crm.app.controllers;
 import com.crm.app.exceptions.NoContactException;
 import com.crm.app.models.Contact;
 import com.crm.app.services.ContactService;
+import com.crm.app.services.ExportService;
+import com.crm.app.services.ExportServiceDBImpl;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Api(description = "Endpoints for Creating, Retrieving, Updating and Deleting of Contacts.",
         tags = {"contact"})
@@ -20,9 +23,11 @@ import java.util.NoSuchElementException;
 @RequestMapping("api/v1/")
 public class ContactController {
     private final ContactService contactService;
+    private final ExportService exportService;
 
-    public ContactController(ContactService contactService) {
+    public ContactController(ContactService contactService, ExportService exportService) {
         this.contactService = contactService;
+        this.exportService = exportService;
     }
 
     // TODO: Mockito Test => Postman works with Admin + SuperAdmin
@@ -108,5 +113,20 @@ public class ContactController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
+    }
+
+    // TODO: Mockito Test + Export
+    @GetMapping("/contacts/export/excel")
+    public void exportToExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.getDateTimeInstance().format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=contacts_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+        List<Contact> listContact = contactService.getAllContacts();
+        exportService.export(response);
     }
 }
