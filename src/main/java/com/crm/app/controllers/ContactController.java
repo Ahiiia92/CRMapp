@@ -120,13 +120,13 @@ public class ContactController {
     public void exportToExcel(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.getDateTimeInstance().format(new Date());
+        String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=contacts_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-        List<Contact> listContact = contactService.getAllContacts();
-        exportService.export(response);
+        List<Contact> listContacts = contactService.getAllContacts();
+        exportService.export(response, listContacts);
     }
 }
