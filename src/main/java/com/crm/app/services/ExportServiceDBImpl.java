@@ -13,9 +13,13 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -43,16 +47,17 @@ public class ExportServiceDBImpl implements ExportService {
 
         ServletOutputStream outputStream = response.getOutputStream();
         workbook.write(outputStream);
-        workbook.close();
-
         outputStream.close();
+        workbook.close();
     }
 
     // Private Methods
 
     private void writeHeaderLine() {
         System.out.println("I'm in writeHeaderLine");
-        sheet = workbook.createSheet("Contacts");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        sheet = workbook.createSheet("Contacts" + currentDateTime);
         Row row = sheet.createRow(0);
 
         CellStyle style = workbook.createCellStyle();
