@@ -1,7 +1,7 @@
 package com.crm.app.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,9 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 @Component
 public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
-    private static Logger log = LoggerFactory.getLogger(LoggingAccessDeniedHandler.class);
+    // private static Logger log = LoggerFactory.getLogger(LoggingAccessDeniedHandler.class);
+    private static Logger log = LogManager.getLogger(LoggingAccessDeniedHandler.class);
+
     @Override
     public void handle(HttpServletRequest httpServletRequest,
                        HttpServletResponse httpServletResponse,
