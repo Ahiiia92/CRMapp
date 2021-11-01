@@ -251,24 +251,32 @@ public class Contact {
         this.user = user;
     }
 
+    public SocialMedia getSocialMedia() {return socialMedia; }
+
+    public void setSocialMedia(SocialMedia socialMedia) {
+        this.socialMedia = socialMedia;
+    }
+
     @Override
     public String toString() {
         return "Contact{" +
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
                 ", profession='" + profession + '\'' +
                 ", phone='" + phone + '\'' +
-                ", contact_status=" + contact_status +
+                ", address='" + address + '\'' +
+                ", created_at=" + created_at +
+                ", nextViewingDate=" + nextViewingDate +
                 ", sellingProject=" + sellingProject +
                 ", owner=" + owner +
                 ", ambassador=" + ambassador +
-                ", created_at=" + created_at +
+                ", doorBell=" + doorBell +
+                ", email='" + email + '\'' +
+                ", socialMedia=" + socialMedia +
+                ", contact_status=" + contact_status +
                 ", children=" + children +
                 ", ownerSince=" + ownerSince +
-/*                ", notes=" + notes +*/
                 ", user=" + user +
                 '}';
     }

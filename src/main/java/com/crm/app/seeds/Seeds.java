@@ -10,10 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.time.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -63,15 +60,16 @@ public class Seeds implements CommandLineRunner {
         Contact u1 = new Contact(faker.name().firstName(), faker.name().lastName());
         u1.setAddress(faker.address().fullAddress());
         u1.setEmail(faker.internet().emailAddress());
-        u1.setOwner(true);
-        u1.setAmbassador(true);
+        u1.setOwner(faker.bool().bool());
+        u1.setAmbassador(faker.bool().bool());
         u1.setChildren(faker.number().numberBetween(0,5));
-        u1.setProfession("Accountant");
+        u1.setProfession(faker.company().profession());
         u1.setPhone(faker.phoneNumber().phoneNumber());
-        u1.setSellingProject(true);
+        u1.setSellingProject(faker.bool().bool());
         u1.setOwnerSince(LocalDate.of(1997, 04,15));
         u1.setCreated_at();
         u1.setContact_status(Contact_status.SEEN);
+        u1.setSocialMedia(SocialMedia.INSTAGRAM);
         Optional<User> superAd = userRepository.findUserByUsername("superAdmin");
         u1.setUser(superAd.get());
         contactRepository.save(u1);
@@ -81,6 +79,16 @@ public class Seeds implements CommandLineRunner {
         System.out.println("2...");
         Contact u2 = new Contact(faker.name().firstName(), faker.name().lastName());
         u2.setAddress(faker.address().fullAddress());
+        u2.setEmail(faker.internet().emailAddress());
+        u2.setOwner(faker.bool().bool());
+        u2.setAmbassador(faker.bool().bool());
+        u2.setChildren(faker.number().numberBetween(0,5));
+        u2.setProfession(faker.company().profession());
+        u2.setPhone(faker.phoneNumber().phoneNumber());
+        u2.setSellingProject(faker.bool().bool());
+        u2.setOwnerSince(LocalDate.of(1997, 04,15));
+        u2.setCreated_at();
+        u2.setSocialMedia(SocialMedia.FACEBOOK);
         u2.setContact_status(Contact_status.OPPORTUNITY);
         Optional<User> admin1 = userRepository.findUserByUsername("admin");
         u2.setUser(admin1.get());
