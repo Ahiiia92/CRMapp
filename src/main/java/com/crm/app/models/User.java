@@ -1,6 +1,7 @@
 package com.crm.app.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "CRMUsers")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue
     @Column(name = "user_id")
