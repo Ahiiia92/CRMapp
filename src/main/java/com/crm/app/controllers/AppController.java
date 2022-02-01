@@ -19,8 +19,7 @@ public class AppController {
 
     @GetMapping("/login")
     public boolean isLogin(@RequestBody User user) {
-        return
-                user.getUsername().equals("user") && user.getPassword().equals("password");
+        return user.getUsername().equals("user") && user.getPassword().equals("password");
     }
 
     @GetMapping("/users")
