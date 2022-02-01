@@ -33,12 +33,17 @@ public class UserServiceDBImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public User getUserById(Integer userId) {
-        Optional<User> optUser = userRepository.findById(userId);
+    public User getUserById(String userId) {
+        Optional<User> optUser = userRepository.findById(Integer.parseInt(userId));
         if(optUser.isPresent())
             return optUser.get();
         else
             throw new NoUserException(userId);
+    }
+
+    @Override
+    public Optional<User> getUserByUsername(String username) {
+        return null;
     }
 
     @Override

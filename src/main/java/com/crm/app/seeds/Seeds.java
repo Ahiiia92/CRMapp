@@ -43,6 +43,7 @@ public class Seeds implements CommandLineRunner {
         admin.setRoleName("Admin");
 
         // User
+        /**
         System.out.println("Creating a fake User...");
         User eric = new User();
         eric.setEmail("e@e.fr");
@@ -53,6 +54,7 @@ public class Seeds implements CommandLineRunner {
         eric.setRole(admin);
         userRepository.save(eric);
         System.out.println(eric.getFirstname() + " " + eric.getLastname() + " with user_id: " + eric.getId() + " has been created as " + eric.getRole());
+         */
 
         // Contact
         System.out.println("Creating fake contacts...");
@@ -71,7 +73,7 @@ public class Seeds implements CommandLineRunner {
         u1.setContact_status(Contact_status.SEEN);
         u1.setSocialMedia(SocialMedia.INSTAGRAM);
         Optional<User> superAd = userRepository.findUserByUsername("superAdmin");
-        u1.setUser(superAd.get());
+        //u1.setUser(superAd.get());
         contactRepository.save(u1);
         System.out.println("Contact 1: " + u1.getFirstname() + " with contact_id: " + u1.getId() + " has been created!");
         System.out.println(u1.toString());
@@ -91,7 +93,7 @@ public class Seeds implements CommandLineRunner {
         u2.setSocialMedia(SocialMedia.FACEBOOK);
         u2.setContact_status(Contact_status.OPPORTUNITY);
         Optional<User> admin1 = userRepository.findUserByUsername("admin");
-        u2.setUser(admin1.get());
+        // u2.setUser(admin1.get());
         contactRepository.save(u2);
         System.out.println("Contact 2: " + u2.getFirstname() + " with contact_id: " + u2.getId() + " has been created!");
 
@@ -106,10 +108,10 @@ public class Seeds implements CommandLineRunner {
                 "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1650&q=80"
         );
         p1.setContact(u1);
-        p1.setUser(eric);
+        // p1.setUser(eric);
         p1.setAddress(faker.address().fullAddress());
         propertyRepository.save(p1);
-        System.out.println("Property 1: " + p1.getTitle() + " with contact " + p1.getContact().getFirstname() + "and User: " + p1.getUser().getFirstname() + " has been added.");
+        //System.out.println("Property 1: " + p1.getTitle() + " with contact " + p1.getContact().getFirstname() + "and User: " + p1.getUser().getFirstname() + " has been added.");
 
         System.out.println("Prop 2...");
         Property p2 = new Property(
@@ -120,10 +122,10 @@ public class Seeds implements CommandLineRunner {
                 "https://images.unsplash.com/photo-1448630360428-65456885c650?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1347&q=80"
         );
         p2.setContact(u2);
-        p2.setUser(eric);
+        // p2.setUser(eric);
         p2.setAddress(faker.address().fullAddress());
         propertyRepository.save(p2);
-        System.out.println("Property 2: " + p2.getTitle() + " (" + p2.getId() + ") with contact " + p2.getContact().getFirstname() + "and User: " + p2.getUser().getFirstname() + " has been added.");
+        //System.out.println("Property 2: " + p2.getTitle() + " (" + p2.getId() + ") with contact " + p2.getContact().getFirstname() + "and User: " + p2.getUser().getFirstname() + " has been added.");
 
         // Notes
         System.out.println("Creating some notes...");

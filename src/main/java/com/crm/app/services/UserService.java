@@ -4,6 +4,7 @@ import com.crm.app.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("userService")
 public interface UserService {
@@ -11,7 +12,9 @@ public interface UserService {
 
     User createUser(User user);
 
-    User getUserById(Integer userId);
+    User getUserById(String userId);
+
+    Optional<User> getUserByUsername(String username);
 
     User updateUser(Integer userId, User updateUser);
 
