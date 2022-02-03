@@ -51,7 +51,7 @@ public class Contact {
     // within the contact view, the last viewing Date should be displayed
     private LocalDateTime nextViewingDate;
 
-    @ApiModelProperty(notes = "Check if there is a doorbell or not", required = true)
+    @ApiModelProperty(notes = "Check if there is a doorbell or not, if the prospect wants to sell, if he is the owner or if he is an ambassador", required = true)
     // A contact is either a buyer or a seller
     private Boolean sellingProject, owner, ambassador, doorBell;
 
@@ -65,7 +65,7 @@ public class Contact {
     private Contact_status contact_status;
 
     // How many children have our contact
-    @ApiModelProperty(notes = "Check if there is a doorbell or not", required = false)
+    @ApiModelProperty(notes = "Number of children", required = false)
     private Integer children;
 
     @DateTimeFormat(pattern = "dd LLL. yyyy")
