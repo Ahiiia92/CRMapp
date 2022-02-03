@@ -1,4 +1,4 @@
-<h1 align="center">CRM App Angular Frontend</h1>
+<h1 align="center">CRM App Backend Repo</h1>
 
 <div align="center">
   <h3>
