@@ -81,7 +81,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Spring Boot
 - [PostgreSQL](https://www.postgresql.org/)
 - [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
-- [Firebase](https://firebase.google.com/)
+- The Frontend is hosted on [Firebase](https://firebase.google.com/)
+- The Backend is hosted on [Heroku](https://firebase.google.com/)
 
 ## Features
 
