@@ -10,7 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Api(description = "Endpoints for Creating, Retrieving, Updating and Deleting of Users.",
         tags = {"user"})
@@ -28,16 +30,13 @@ public class UserController {
         this.config = config;
     }
 
-
-    // TODO: CRUD for users.
-    // TODO: add the User feature (service, repo etc) to enable login
-    @GetMapping("/")
-    public ResponseEntity<User> getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        User user = userService.findUserByUsername(username);
-        return ResponseEntity.ok().body(user);
-    }
+//    @GetMapping("/")
+//    public ResponseEntity<User> getCurrentUser() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String username = auth.getName();
+//        User user = userService.findUserByUsername(username);
+//        return ResponseEntity.ok().body(user);
+//    }
 
     // LOGIN
     @GetMapping("/login")
@@ -93,7 +92,23 @@ public class UserController {
     }
 
     // UPDATE
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> editUser(
+            @ApiParam("Id of the user to get. Cannot be empty.")
+            @PathVariable(name = "id") Integer userId,
+            @Validated @RequestBody User user) {
+        User updatedUser = userService.editUser(user);
+        return ResponseEntity.status(201).body(updatedUser);
+    }
     // DELETE
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Map<String, Boolean>> removeUser(
+            @RequestParam("userId") Integer userId) {
+        userService.removeUser(userId);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("User deleted", Boolean.TRUE);
+        return ResponseEntity.status(200).body(response);
+    }
 
     @GetMapping("/access-denied")
     public String accessDenied() {

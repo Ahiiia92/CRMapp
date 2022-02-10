@@ -43,6 +43,19 @@ public class UserServiceDBImpl implements UserService {
         return userRepo.save(user);
     }
 
-//    TODO: void removeUser(Integer user_id);
-//    TODO: void editUser(User user);
+    @Override
+    public User editUser(User user) {
+        Optional<User> optUser = userRepo.findById(user.getId());
+        if (optUser.isPresent()) {
+            return userRepo.save(user);
+        } else {
+            throw new UserNotFoundException(user.getId()); }
+    }
+
+    @Override
+    public void removeUser(Integer userId) {
+        Optional<User> optUser = userRepo.findById(userId);
+        optUser.ifPresent(user -> userRepo.delete(user));
+    }
+
 }
