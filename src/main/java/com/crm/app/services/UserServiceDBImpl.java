@@ -38,7 +38,11 @@ public class UserServiceDBImpl implements UserService {
             throw new UserNotFoundException(userId); }
     }
 
+    @Override
+    public User createUser(User user) {
+        return userRepo.save(user);
+    }
+
 //    TODO: void removeUser(Integer user_id);
-//    TODO: User createNewUser(User user);
 //    TODO: void editUser(User user);
 }

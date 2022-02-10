@@ -3,13 +3,11 @@ package com.crm.app.controllers;
 import com.crm.app.models.User;
 import com.crm.app.security.SecurityConfig;
 import com.crm.app.services.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -68,25 +66,31 @@ public class UserController {
             @ApiResponse(code = 200, message = "successful operation", response= User.class),
             @ApiResponse(code = 404, message = "User not found") })
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUser(@PathVariable(name = "id") Integer userId) {
+    public ResponseEntity<User> getUser(
+            @ApiParam("Id of the user to get. Cannot be empty.")
+            @PathVariable(name = "id") Integer userId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         User profile = userService.findUserById(userId);
         return ResponseEntity.ok().body(profile);
-
-
     }
-    // TODO: Create the get user with Pathvariable being Id and return the responseEntity with the user
-//
+    //
 
     // SIGN IN
-//    @ApiOperation(value = "Add a new user", tags = { "user" })
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 201, message = "User created"),
-//            @ApiResponse(code = 400, message = "Invalid input"),
-//            @ApiResponse(code = 409, message = "User already exists") })
-//    @PostMapping("/signin")
-//    TODO: Create the Post user with User as Request Body
+    @ApiOperation(value = "Add a new user", tags = { "user" })
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "User created"),
+            @ApiResponse(code = 400, message = "Invalid input"),
+            @ApiResponse(code = 409, message = "User already exists") })
+    @PostMapping("/signin")
+    public ResponseEntity<User> signInUser(
+            @ApiParam("User to create. Cannot null or empty.")
+            @Validated @RequestBody User user) {
+        user.setPassword(config.encoder().encode(user.getPassword()));
+        User newUser = userService.createUser(user);
+
+        return ResponseEntity.status(201).body(newUser);
+    }
 
     // UPDATE
     // DELETE
