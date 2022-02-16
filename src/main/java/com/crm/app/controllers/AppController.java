@@ -9,12 +9,7 @@ import java.util.Base64;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/")
+@RequestMapping("/home")
 public class AppController {
-    // Index
-    @GetMapping("/")
-    public String home() {
-        return "index";
-    }
 
 }

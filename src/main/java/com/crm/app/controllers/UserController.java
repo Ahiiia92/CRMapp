@@ -30,13 +30,15 @@ public class UserController {
         this.config = config;
     }
 
-//    @GetMapping("/")
-//    public ResponseEntity<User> getCurrentUser() {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        String username = auth.getName();
-//        User user = userService.findUserByUsername(username);
-//        return ResponseEntity.ok().body(user);
-//    }
+    @GetMapping("/")
+    public ResponseEntity<User> getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        if (username.equals("anonymousUser"))
+            return ResponseEntity.badRequest().body(userService.findUserByUsername(username));
+        User user = userService.findUserByUsername(username);
+        return ResponseEntity.ok().body(user);
+    }
 
     // LOGIN
     @GetMapping("/login")
@@ -81,7 +83,7 @@ public class UserController {
             @ApiResponse(code = 201, message = "User created"),
             @ApiResponse(code = 400, message = "Invalid input"),
             @ApiResponse(code = 409, message = "User already exists") })
-    @PostMapping("/signin")
+    @PostMapping("/register")
     public ResponseEntity<User> signInUser(
             @ApiParam("User to create. Cannot null or empty.")
             @Validated @RequestBody User user) {
@@ -103,6 +105,7 @@ public class UserController {
     // DELETE
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Map<String, Boolean>> removeUser(
+            @ApiParam("Id of the user to get. Cannot be empty.")
             @RequestParam("userId") Integer userId) {
         userService.removeUser(userId);
         Map<String, Boolean> response = new HashMap<>();
