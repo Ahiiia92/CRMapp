@@ -42,6 +42,14 @@ public class Seeds implements CommandLineRunner {
         Role admin = new Role();
         admin.setRoleName("Admin");
 
+        // Anonymous User
+        System.out.println("Creating an Anonymous User...");
+        User anonymousUser = new User();
+        anonymousUser.setUsername("anonymousUser");
+        anonymousUser.setPassword("anonymousUser");
+        userRepository.save(anonymousUser);
+        System.out.println("Username: " + anonymousUser.getUsername() + " || Password: " + anonymousUser.getPassword());
+
         // User
         System.out.println("Creating a fake User...");
         User eric = new User();

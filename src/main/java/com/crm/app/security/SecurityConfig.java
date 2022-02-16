@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/icons/**",
                         "/",
                         "/login",
+                        "/register",
                         "/css/**",
                         "/js/**",
                         "/h2/**",
@@ -37,11 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
 //                .antMatchers(HttpMethod.PUT, "/api/v1/**").authenticated()
 //                .antMatchers(HttpMethod.DELETE, "/api/v1/**").authenticated()
-//                .antMatchers(HttpMethod.GET, "/api/v1/contacts/**").hasRole("SuperAdmin")
-//                .antMatchers(HttpMethod.POST, "/api/v1/contacts/").hasRole("SuperAdmin")
-//                .antMatchers(HttpMethod.PUT, "/api/v1/contacts/**").hasRole("SuperAdmin")
-//                .antMatchers(HttpMethod.DELETE, "/api/v1/contacts/**").hasRole("SuperAdmin")
-//                .antMatchers("/api/v1/contacts/**").hasRole("Admin")
                 .anyRequest().authenticated() // says all requests needs to be authenticated
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -56,24 +54,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
     }
 
-    /* Comment out for now.
     // Create Some admin access
-    @Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// add our users for in memory authentication
-        User.UserBuilder users = User.withDefaultPasswordEncoder();
-
-		//UserBuilder users = User();
-
-		auth.inMemoryAuthentication()
-			.withUser("testAdmin").password("password123").roles("Admin")
-                .and()
-			.withUser("testSuperAdmin").password("test123").roles("SuperAdmin")
-		        .and()
-			.withUser("admin").password("password123").roles("ADMIN");
-	}
-
-     */
+//    @Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		// add our users for in memory authentication
+//        User.UserBuilder users = User.withDefaultPasswordEncoder();
+//
+//		//UserBuilder users = User();
+//
+//		auth.inMemoryAuthentication()
+//			.withUser("testAdmin").password("password123").roles("Admin")
+//                .and()
+//			.withUser("testSuperAdmin").password("test123").roles("SuperAdmin")
+//		        .and()
+//			.withUser("admin").password("password123").roles("ADMIN")
+//                .and()
+//            .withUser("anonymousUser").password("123456").roles("Admin");
+//	}
 
     // authentication provider
     @Bean

@@ -90,6 +90,8 @@ This application frontend was created as a real estate solution to ease pre-sale
 
 It enables real estate agent to manage their contacts.
 
+## Logging and Health Monitoring
+use the `actuator/health` and `/info` endpoints to get more info about the health of the API.
 
 ## Acknowledgements
 

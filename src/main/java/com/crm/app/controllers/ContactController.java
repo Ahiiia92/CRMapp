@@ -2,11 +2,14 @@ package com.crm.app.controllers;
 
 import com.crm.app.exceptions.NoContactException;
 import com.crm.app.models.Contact;
+import com.crm.app.models.User;
 import com.crm.app.services.ContactService;
 import com.crm.app.services.ExportService;
-import com.crm.app.services.ExportServiceDBImpl;
+import com.crm.app.services.UserService;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +27,18 @@ import java.util.*;
 public class ContactController {
     private final ContactService contactService;
     private final ExportService exportService;
+    private final UserService userService;
 
-    public ContactController(ContactService contactService, ExportService exportService) {
+    public ContactController(ContactService contactService, ExportService exportService, UserService userService) {
         this.contactService = contactService;
         this.exportService = exportService;
+        this.userService = userService;
+    }
+
+    public User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        return userService.findUserByUsername(username);
     }
 
     // TODO: Mockito Test => Postman works with Admin + SuperAdmin
@@ -36,6 +47,7 @@ public class ContactController {
             @ApiResponse(code = 200, message = "successful operation", response=List.class )  })
     @GetMapping("/contacts")
     public ResponseEntity<List<Contact>> getContacts() {
+        User user = getCurrentUser();
         List<Contact> contacts = contactService.getAllContacts();
         return ResponseEntity.ok().body(contacts);
     }
@@ -50,6 +62,8 @@ public class ContactController {
     public ResponseEntity<Contact> showcontact(
             @ApiParam("Id of the contact to be obtained. Cannot be empty.")
             @PathVariable Integer id) {
+        User user = getCurrentUser();
+
         Contact contact = contactService.getContactById(id);
         return ResponseEntity.ok().body(contact);
     }
@@ -65,6 +79,8 @@ public class ContactController {
     public ResponseEntity<Map<String, Boolean>> createContact(
             @ApiParam("Contact to add. Cannot null or empty.")
             @Validated  @RequestBody Contact contact) {
+        User user = getCurrentUser();
+
         Contact contactCreated = contactService.createContact(contact);
         Map<String, Boolean> response = new HashMap<>();
         if (contactCreated == null) throw new NoContactException("The contact with id " + contact.getId() + "can't be found");
@@ -88,6 +104,8 @@ public class ContactController {
             @PathVariable Integer id,
             @ApiParam("Contact to update. Cannot null or empty.")
             @Validated @RequestBody Contact contactDetails) {
+        User user = getCurrentUser();
+
         Contact updatedContact = contactService.updateContact(id, contactDetails);
         Map<String, Boolean> response = new HashMap<>();
         if(updatedContact == null) {
@@ -109,6 +127,8 @@ public class ContactController {
     public Map<String, Boolean> deleteContact(
             @ApiParam("Id of the contact to be deleted. Cannot be empty.")
             @PathVariable Integer id) {
+        User user = getCurrentUser();
+
         contactService.deleteContact(id);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
@@ -118,6 +138,8 @@ public class ContactController {
     // TODO: Mockito Test + Export
     @GetMapping("/contacts/export/excel")
     public void exportToExcel(HttpServletResponse response) throws IOException {
+        User user = getCurrentUser();
+
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
         String currentDateTime = dateFormatter.format(new Date());
