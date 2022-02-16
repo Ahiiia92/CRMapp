@@ -30,21 +30,21 @@ public class UserController {
         this.config = config;
     }
 
-    @GetMapping("/")
-    public ResponseEntity<User> getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        if (username.equals("anonymousUser"))
-            return ResponseEntity.badRequest().body(userService.findUserByUsername(username));
-        User user = userService.findUserByUsername(username);
-        return ResponseEntity.ok().body(user);
-    }
+//    @GetMapping("/")
+//    public ResponseEntity<User> getCurrentUser() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String username = auth.getName();
+//        if (username.equals("anonymousUser"))
+//            return ResponseEntity.badRequest().body(userService.findUserByUsername(username));
+//        User user = userService.findUserByUsername(username);
+//        return ResponseEntity.ok().body(user);
+//    }
 
     // LOGIN
-    @GetMapping("/login")
-    public String toLogin() {
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String toLogin() {
+//        return "login";
+//    }
 
     // INDEX
     @ApiOperation(value = "Retrieving all users", tags = { "user" })

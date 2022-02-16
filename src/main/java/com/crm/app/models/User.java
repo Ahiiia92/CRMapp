@@ -4,25 +4,37 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "CRMUsers")
+@Table(name = "CRMUsers", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"username"}),
+        @UniqueConstraint(columnNames = {"email"})
+})
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class User {
     @Id
     @GeneratedValue
     @Column(name = "user_id")
     private Integer id;
-    private String firstname, lastname, email, password, username;
+    private String firstname, lastname, password;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "email")
+    private String email;
 
     @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Contact> contacts;
 
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
+    private Set<Role> roles;
 
-    public User() { super(); };
+    public User() { super(); }
 
     public User(String email, String username, String password) {
         this.email = email;
@@ -30,19 +42,20 @@ public class User {
         this.password = password;
     }
 
-    public User(String email, String password, String username, Role role) {
+    public User(String email, String password, String username, Set<Role> roles) {
         this.email = email;
         this.password = password;
         this.username = username;
-        this.role = role;
+        this.roles = roles;
     }
 
-    public Role getRole() {
-        return role;
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Integer getId() {

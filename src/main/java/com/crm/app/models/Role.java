@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -16,17 +15,10 @@ public class Role implements GrantedAuthority {
     private Integer id;
     private String roleName;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
-    private List<User> users;
-
     public Role() {};
 
     public Role(String roleName) {
         this.roleName = roleName;
-    }
-
-    public String getRoleName() {
-        return roleName;
     }
 
     public void setRoleName(String roleName) {
@@ -41,12 +33,8 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public String getRoleName() {
+        return roleName;
     }
 
     @Override

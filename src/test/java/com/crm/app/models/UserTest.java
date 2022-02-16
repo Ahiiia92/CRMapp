@@ -4,7 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,12 +17,15 @@ class UserTest {
     Role roleValue;
     String firstnameValue, lastnameValue, emailValue, usernameValue, passwordValue;
     List<Contact> contactList;
+    Set<Role> roles;
 
     // Before each test, we want to crete a new user
     @BeforeEach
     public void setUp() {
         user = new User();
         roleValue = new Role("testAdmin");
+        roles = new HashSet<>();
+        roles.add(roleValue);
         firstnameValue = "testFirstname";
         lastnameValue = "testLastname";
         emailValue = "testEmail@email.de";
@@ -31,8 +36,8 @@ class UserTest {
 
     @Test
     void getRole() {
-        user.setRole(roleValue);
-        assertEquals(roleValue, user.getRole());
+        user.setRoles(roles);
+        assertEquals(roleValue, user.getRoles());
     }
 
     @Test

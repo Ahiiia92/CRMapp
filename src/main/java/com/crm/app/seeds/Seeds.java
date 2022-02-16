@@ -40,7 +40,21 @@ public class Seeds implements CommandLineRunner {
 
         // Role
         Role admin = new Role();
-        admin.setRoleName("Admin");
+        admin.setRoleName("admin");
+
+        Role superAdmin = new Role();
+        superAdmin.setRoleName("superAdmin");
+
+        Role employee = new Role();
+        employee.setRoleName("employee");
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(admin);
+        roles.add(superAdmin);
+        roles.add(employee);
+
+        System.out.println(roles);
+
 
         // Anonymous User
         System.out.println("Creating an Anonymous User...");
@@ -58,9 +72,9 @@ public class Seeds implements CommandLineRunner {
         eric.setLastname("Dujardin");
         eric.setUsername("eric");
         eric.setPassword("eric123");
-        eric.setRole(admin);
+        eric.setRoles(roles);
         userRepository.save(eric);
-        System.out.println(eric.getFirstname() + " " + eric.getLastname() + " with user_id: " + eric.getId() + " has been created as " + eric.getRole());
+        System.out.println(eric.getFirstname() + " " + eric.getLastname() + " with user_id: " + eric.getId() + " has been created as " + eric.getRoles());
 
         // Contact
         System.out.println("Creating fake contacts...");
@@ -78,8 +92,8 @@ public class Seeds implements CommandLineRunner {
         u1.setCreated_at();
         u1.setContact_status(Contact_status.SEEN);
         u1.setSocialMedia(SocialMedia.INSTAGRAM);
-        Optional<User> superAd = userRepository.findUserByUsername("superAdmin");
-        u1.setUser(superAd.get());
+//        Optional<User> superAd = userRepository.findUserByUsername("superAdmin");
+//        u1.setUser(superAd.get());
         contactRepository.save(u1);
         System.out.println("Contact 1: " + u1.getFirstname() + " with contact_id: " + u1.getId() + " has been created!");
         System.out.println(u1.toString());
@@ -98,8 +112,8 @@ public class Seeds implements CommandLineRunner {
         u2.setCreated_at();
         u2.setSocialMedia(SocialMedia.FACEBOOK);
         u2.setContact_status(Contact_status.OPPORTUNITY);
-        Optional<User> admin1 = userRepository.findUserByUsername("admin");
-        u2.setUser(admin1.get());
+//        Optional<User> admin1 = userRepository.findUserByUsername("admin");
+//        u2.setUser(admin1.get());
         contactRepository.save(u2);
         System.out.println("Contact 2: " + u2.getFirstname() + " with contact_id: " + u2.getId() + " has been created!");
 
