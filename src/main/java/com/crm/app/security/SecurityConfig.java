@@ -40,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
 //                .antMatchers(HttpMethod.PUT, "/api/v1/**").authenticated()
 //                .antMatchers(HttpMethod.DELETE, "/api/v1/**").authenticated()
-                .anyRequest().authenticated() // says all requests needs to be authenticated
+//                .anyRequest().authenticated() // says all requests needs to be authenticated
+                .anyRequest().permitAll() // says all requests can be accessed until Spring security is implmented
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
