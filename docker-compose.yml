@@ -1,0 +1,86 @@
+version: "3.7"
+#  api_service:
+#    build: .
+#    restart: always
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - postgres_db
+#    links:
+#      - postgres_db:database
+#  postgres_db:
+#    image: "postgres:11.4"
+#    restart: always
+#    ports:
+#      - 5432:5432
+#    environment:
+#      POSTGRES_DB: ${DB_DATABASE}
+#      POSTGRES_PASSWORD: ${DB_PASSWORD}
+#      POSTGRES_USER: ${DB_USER}
+
+services:
+  postgres:
+    container_name: crm_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+#  crm_api:
+#    container_name: crm_api
+#    hostname: crm_api
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    ports:
+#      - 54322:5000
+#    volumes:
+#      - ./crm_api/src/:/usr/src/app/
+#      - /usr/src/app/node_modules # Don't need these
+#    restart: unless-stopped
+#    depends_on:
+#      - postgres
+#  # The webserver will hold the source code for our website (via volumes).
+#  # Also notice that we map 2 ports in this container: 80 and 443 (http and https).
+#  crm_webserver:
+#    container_name: crm_webserver
+#    hostname: crm_webserver
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    ports:
+#      - 80:80
+#      - 443:443
+#    volumes:
+#      - ./crm_webserver/src/test:/usr/share/nginx/html
+#    restart: always
+#    depends_on:
+#      - postgres
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
