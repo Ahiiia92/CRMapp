@@ -1,10 +1,10 @@
 FROM maven:3.8-jdk-11
 
-RUN mkdir /project
+RUN mkdir /home/crmapp
 
-COPY . /project
+COPY . /home/crmapp
 
-WORKDIR /project
+WORKDIR /home/crmapp
 
 RUN mvn clean package -DskipTests
 

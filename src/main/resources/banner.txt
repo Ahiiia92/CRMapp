@@ -5,6 +5,5 @@
    _|_|_|   _|    _|   _|      _|       _|    _|   _|_|_|     _|_|_|
                                                    _|         _|
                                                    _|         _|
-${application.title} | ${application.version}
 Powered by Spring Boot ${spring-boot.version}
-Developed by Ahiiia92
+Developed by @Ahiiia92
