@@ -2,7 +2,10 @@ version: "3.7"
 
 services:
   crmapp:
-    image: 214964386210.dkr.ecr.eu-west-2.amazonaws.com/crmapp:1.0
+    build: .
+    depends_on:
+      - postgresdb
+#    image: 214964386210.dkr.ecr.eu-west-2.amazonaws.com/crmapp:1.0
     ports:
       - 8088:8088
     volumes:
