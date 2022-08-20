@@ -37,12 +37,18 @@ public class Seeds implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("\n");
+        System.out.println("******************************");
+        System.out.println("*** CONFIGURATION: STARTED ***");
+        System.out.println("******************************");
+        System.out.println("\n");
 
         // Role
         Role admin = new Role();
         admin.setRoleName("Admin");
 
         // Anonymous User
+        System.out.println("\n");
         System.out.println("Creating an Anonymous User...");
         User anonymousUser = new User();
         anonymousUser.setUsername("anonymousUser");
@@ -51,6 +57,7 @@ public class Seeds implements CommandLineRunner {
         System.out.println("Username: " + anonymousUser.getUsername() + " || Password: " + anonymousUser.getPassword());
 
         // User
+        System.out.println("\n");
         System.out.println("Creating a fake User...");
         User eric = new User();
         eric.setEmail("e@e.fr");
@@ -63,6 +70,7 @@ public class Seeds implements CommandLineRunner {
         System.out.println(eric.getFirstname() + " " + eric.getLastname() + " with user_id: " + eric.getId() + " has been created as " + eric.getRole());
 
         // Contact
+        System.out.println("\n");
         System.out.println("Creating fake contacts...");
         System.out.println("1...");
         Contact u1 = new Contact(faker.name().firstName(), faker.name().lastName());
@@ -84,6 +92,7 @@ public class Seeds implements CommandLineRunner {
         System.out.println("Contact 1: " + u1.getFirstname() + " with contact_id: " + u1.getId() + " has been created!");
         System.out.println(u1.toString());
 
+        System.out.println("\n");
         System.out.println("2...");
         Contact u2 = new Contact(faker.name().firstName(), faker.name().lastName());
         u2.setAddress(faker.address().fullAddress());
@@ -104,6 +113,7 @@ public class Seeds implements CommandLineRunner {
         System.out.println("Contact 2: " + u2.getFirstname() + " with contact_id: " + u2.getId() + " has been created!");
 
         // Property
+        System.out.println("\n");
         System.out.println("Creating some properties...");
         System.out.println("Prop 1...");
         Property p1 = new Property(
@@ -119,6 +129,7 @@ public class Seeds implements CommandLineRunner {
         propertyRepository.save(p1);
         System.out.println("Property 1: " + p1.getTitle() + " with contact " + p1.getContact().getFirstname() + "and User: " + p1.getUser().getFirstname() + " has been added.");
 
+        System.out.println("\n");
         System.out.println("Prop 2...");
         Property p2 = new Property(
                 faker.company().name(),
@@ -134,6 +145,7 @@ public class Seeds implements CommandLineRunner {
         System.out.println("Property 2: " + p2.getTitle() + " (" + p2.getId() + ") with contact " + p2.getContact().getFirstname() + "and User: " + p2.getUser().getFirstname() + " has been added.");
 
         // Notes
+        System.out.println("\n");
         System.out.println("Creating some notes...");
         Set<Note> notes = new HashSet<>();
         Note no1 = new Note();
@@ -149,6 +161,7 @@ public class Seeds implements CommandLineRunner {
         System.out.println(u1.toString());
 
         // Viewings
+        System.out.println("\n");
         System.out.println("Creating some viewings");
         Viewing viewing1 = new Viewing(
                 LocalDateTime.of(2021, Month.JULY, 25, 15, 30),
@@ -157,5 +170,11 @@ public class Seeds implements CommandLineRunner {
         System.out.println(viewing1);
         viewingRepository.save(viewing1);
         System.out.println("Viewing 1: " + viewing1.getNotes() + " with date: " + viewing1.getViewingDate());
+
+        System.out.println("\n");
+        System.out.println("******************************");
+        System.out.println("*** CONFIGURATION: DONE ***");
+        System.out.println("******************************");
+        System.out.println("\n");
     }
 }
