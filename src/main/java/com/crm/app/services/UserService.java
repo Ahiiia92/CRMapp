@@ -18,4 +18,6 @@ public interface UserService {
     User editUser(User user);
 
     void removeUser(Integer userId);
+
+    User getCurrentUser();
 }

@@ -2,14 +2,17 @@ package com.crm.app.controllers;
 
 import com.crm.app.models.User;
 import com.crm.app.security.SecurityConfig;
+import com.crm.app.services.UserDetailsServiceDBImpl;
 import com.crm.app.services.UserService;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,9 @@ import java.util.Map;
 @CrossOrigin
 @RequestMapping("/")
 public class UserController {
+    @Autowired
+    AuthenticationManager authenticationManager;
+
     private final UserService userService;
     private final SecurityConfig config;
 
@@ -28,22 +34,6 @@ public class UserController {
             SecurityConfig config) {
         this.userService = userService;
         this.config = config;
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<User> getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        if (username.equals("anonymousUser"))
-            return ResponseEntity.badRequest().body(userService.findUserByUsername(username));
-        User user = userService.findUserByUsername(username);
-        return ResponseEntity.ok().body(user);
-    }
-
-    // LOGIN
-    @GetMapping("/login")
-    public String toLogin() {
-        return "login";
     }
 
     // INDEX
@@ -57,6 +47,7 @@ public class UserController {
     })
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
+        userService.getCurrentUser();
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok().body(users);
     }
@@ -70,27 +61,62 @@ public class UserController {
     public ResponseEntity<User> getUser(
             @ApiParam("Id of the user to get. Cannot be empty.")
             @PathVariable(name = "id") Integer userId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
+        userService.getCurrentUser();
         User profile = userService.findUserById(userId);
         return ResponseEntity.ok().body(profile);
     }
-    //
 
-    // SIGN IN
+    // SIGN UP
     @ApiOperation(value = "Add a new user", tags = { "user" })
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "User created"),
             @ApiResponse(code = 400, message = "Invalid input"),
             @ApiResponse(code = 409, message = "User already exists") })
-    @PostMapping("/register")
-    public ResponseEntity<User> signInUser(
-            @ApiParam("User to create. Cannot null or empty.")
+    @PostMapping("/api/auth/signup")
+    public ResponseEntity<User> signUp(
+            @ApiParam("User to create. Cannot be null or empty.")
             @Validated @RequestBody User user) {
         user.setPassword(config.encoder().encode(user.getPassword()));
         User newUser = userService.createUser(user);
 
         return ResponseEntity.status(201).body(newUser);
+    }
+
+    // LOGIN
+    @ApiOperation(value = "Sign In page", tags = { "authentication" })
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "logging successful "),
+            @ApiResponse(code = 403, message = "Unauthorized")
+
+    })
+    @PostMapping("/api/auth/signin")
+    public ResponseEntity<User> signIn(
+            @ApiParam("User to signin. Cqnnot be null or Empty")
+            @Validated @RequestBody User user) {
+        // User loggedUser = userService.findUserByUsername(user.getUsername());
+        // TODO: Solve the logging feature
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        UserDetailsServiceDBImpl userDetails = (UserDetailsServiceDBImpl) authentication.getPrincipal();
+        return ResponseEntity.status(201).body(user);
+    }
+
+    // SIGN OUT
+    @ApiOperation(value = "Sign Out Page", tags = { "authentication" })
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Sign out successful "),
+            @ApiResponse(code = 404, message = "Cannot find user"),
+            @ApiResponse(code = 403, message = "Unauthorized")
+
+    })
+    @DeleteMapping("/api/auth/signout")
+    public ResponseEntity<Map<String, Boolean>> signOut(
+            @Validated @RequestBody User user
+    ) {
+        userService.removeUser(user.getId());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("Deleted", Boolean.TRUE);
+        return ResponseEntity.ok().body(response);
     }
 
     // UPDATE
@@ -107,6 +133,7 @@ public class UserController {
     public ResponseEntity<Map<String, Boolean>> removeUser(
             @ApiParam("Id of the user to get. Cannot be empty.")
             @RequestParam("userId") Integer userId) {
+        userService.getCurrentUser();
         userService.removeUser(userId);
         Map<String, Boolean> response = new HashMap<>();
         response.put("User deleted", Boolean.TRUE);

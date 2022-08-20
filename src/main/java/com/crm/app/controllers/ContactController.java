@@ -35,19 +35,13 @@ public class ContactController {
         this.userService = userService;
     }
 
-    public User getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        return userService.findUserByUsername(username);
-    }
-
     // TODO: Mockito Test => Postman works with Admin + SuperAdmin
     @ApiOperation(value = "Retrieving all contacts", tags = { "contact" })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "successful operation", response=List.class )  })
     @GetMapping("/contacts")
     public ResponseEntity<List<Contact>> getContacts() {
-        User user = getCurrentUser();
+        User user = userService.getCurrentUser();
         List<Contact> contacts = contactService.getAllContacts();
         return ResponseEntity.ok().body(contacts);
     }
@@ -62,7 +56,7 @@ public class ContactController {
     public ResponseEntity<Contact> showcontact(
             @ApiParam("Id of the contact to be obtained. Cannot be empty.")
             @PathVariable Integer id) {
-        User user = getCurrentUser();
+        User user = userService.getCurrentUser();
 
         Contact contact = contactService.getContactById(id);
         return ResponseEntity.ok().body(contact);
@@ -79,7 +73,7 @@ public class ContactController {
     public ResponseEntity<Map<String, Boolean>> createContact(
             @ApiParam("Contact to add. Cannot null or empty.")
             @Validated  @RequestBody Contact contact) {
-        User user = getCurrentUser();
+        User user = userService.getCurrentUser();
 
         Contact contactCreated = contactService.createContact(contact);
         Map<String, Boolean> response = new HashMap<>();
@@ -104,7 +98,7 @@ public class ContactController {
             @PathVariable Integer id,
             @ApiParam("Contact to update. Cannot null or empty.")
             @Validated @RequestBody Contact contactDetails) {
-        User user = getCurrentUser();
+        User user = userService.getCurrentUser();
 
         Contact updatedContact = contactService.updateContact(id, contactDetails);
         Map<String, Boolean> response = new HashMap<>();
@@ -127,7 +121,7 @@ public class ContactController {
     public Map<String, Boolean> deleteContact(
             @ApiParam("Id of the contact to be deleted. Cannot be empty.")
             @PathVariable Integer id) {
-        User user = getCurrentUser();
+        User user = userService.getCurrentUser();
 
         contactService.deleteContact(id);
         Map<String, Boolean> response = new HashMap<>();
@@ -138,7 +132,7 @@ public class ContactController {
     // TODO: Mockito Test + Export
     @GetMapping("/contacts/export/excel")
     public void exportToExcel(HttpServletResponse response) throws IOException {
-        User user = getCurrentUser();
+        User user = userService.getCurrentUser();
 
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");

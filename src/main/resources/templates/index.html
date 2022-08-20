@@ -13,10 +13,8 @@ This is the index
 <div sec:authorize="isAuthenticated()">
     Text visible only to authenticated users.
 </div>
-Authenticated username:
-<div sec:authentication="username"></div>
-Authenticated user roles:
 
+Logged user: <span sec:authentication="name"></span>
 
 <a href="/api/v1/contacts">Go to Contacts</a>
 </body>

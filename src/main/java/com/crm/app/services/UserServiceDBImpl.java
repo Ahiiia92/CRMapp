@@ -4,6 +4,9 @@ import com.crm.app.models.User;
 import com.crm.app.repositories.UserRepository;
 import com.crm.app.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -58,4 +61,12 @@ public class UserServiceDBImpl implements UserService {
         optUser.ifPresent(user -> userRepo.delete(user));
     }
 
+    public User getCurrentUser() {
+        String currentUsername = null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            currentUsername = auth.getName();
+        }
+        return findUserByUsername(currentUsername);
+    }
 }

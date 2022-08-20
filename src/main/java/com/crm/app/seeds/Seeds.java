@@ -51,10 +51,11 @@ public class Seeds implements CommandLineRunner {
         System.out.println("\n");
         System.out.println("Creating an Anonymous User...");
         User anonymousUser = new User();
-        anonymousUser.setUsername("anonymousUser");
-        anonymousUser.setPassword("anonymousUser");
+        anonymousUser.setUsername("testAdmin");
+        anonymousUser.setPassword("password123");
         userRepository.save(anonymousUser);
         System.out.println("Username: " + anonymousUser.getUsername() + " || Password: " + anonymousUser.getPassword());
+        System.out.println("Check the SecurityConfig file to get some test users data");
 
         // User
         System.out.println("\n");
