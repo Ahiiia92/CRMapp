@@ -1,6 +1,7 @@
 name: Changelog
 #source: https://github.com/marketplace/actions/automatic-changelog-generator
 on:
+  workflow_dispatch:
   pull_request:
     types: [closed]
 
