@@ -31,20 +31,21 @@ jobs:
     #if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
-      # - name: Release
-      #   uses: docker://antonyurchenko/git-release:latest
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     args: build/*.zip
-
       - name: Generate Changelog
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Github Release
-        uses: softprops/action-gh-release@v0.1.14 #softprops/action-gh-release
+      - name: Release
+        uses: docker://antonyurchenko/git-release:latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body: ${{ steps.build_changelog.outputs.changelog }}
+          args: build/*.zip
+
+
+      # - name: Create Github Release
+      #   uses: softprops/action-gh-release@v0.1.14 #softprops/action-gh-release
+      #   with:
+      #     body: ${{ steps.build_changelog.outputs.changelog }}
