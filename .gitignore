@@ -39,3 +39,5 @@ CRMapp.postman_collection.json
 docker/
 
 node_modules/
+
+.env

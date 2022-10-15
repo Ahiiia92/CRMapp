@@ -1,4 +1,3 @@
-# Workflow build with Github Actions: Release Changelog Builder (https://github.com/marketplace/actions/release-changelog-builder#configuration-specification)
 name: 'Changelog and Github Release'
 on:
   workflow_dispatch:
@@ -23,6 +22,3 @@ jobs:
         uses: softprops/action-gh-release@v0.1.14 #softprops/action-gh-release
         with:
           body: ${{ steps.build_changelog.outputs.changelog }}
-          files: |
-            Release.txt
-            LICENSE
