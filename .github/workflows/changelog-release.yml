@@ -1,6 +1,28 @@
 name: 'Changelog and Github Release'
 on:
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+      print_tags:
+        description: 'True to print to STDOUT'
+        required: true
+        type: boolean
+      tags:
+        description: 'Which tag do we want to release on?'
+        required: true
+        type: string
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
   pull_request:
     branches:
       - master
@@ -12,6 +34,13 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
+      # - name: Release
+      #   uses: docker://antonyurchenko/git-release:latest
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     args: build/*.zip
+
       - name: Generate Changelog
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v3
