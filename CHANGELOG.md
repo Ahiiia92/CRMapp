@@ -1,8 +1,72 @@
 # Changelog
 
+## [v0.2.3](https://github.com/Ahiiia92/CRMapp/tree/v0.2.3) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.2.2...v0.2.3)
+
+## [v0.2.2](https://github.com/Ahiiia92/CRMapp/tree/v0.2.2) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.2.1...v0.2.2)
+
+## [v0.2.1](https://github.com/Ahiiia92/CRMapp/tree/v0.2.1) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.2.0...v0.2.1)
+
+## [v0.2.0](https://github.com/Ahiiia92/CRMapp/tree/v0.2.0) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.1.9...v0.2.0)
+
+## [v0.1.9](https://github.com/Ahiiia92/CRMapp/tree/v0.1.9) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.1.8...v0.1.9)
+
+## [v0.1.8](https://github.com/Ahiiia92/CRMapp/tree/v0.1.8) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.1.7...v0.1.8)
+
+## [v0.1.7](https://github.com/Ahiiia92/CRMapp/tree/v0.1.7) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/latest...v0.1.7)
+
+## [latest](https://github.com/Ahiiia92/CRMapp/tree/latest) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.1.6...latest)
+
+## [v0.1.6](https://github.com/Ahiiia92/CRMapp/tree/v0.1.6) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/0.1.5...v0.1.6)
+
+## [0.1.5](https://github.com/Ahiiia92/CRMapp/tree/0.1.5) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/0.1.4...0.1.5)
+
+## [0.1.4](https://github.com/Ahiiia92/CRMapp/tree/0.1.4) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/0.1.2...0.1.4)
+
+## [0.1.2](https://github.com/Ahiiia92/CRMapp/tree/0.1.2) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/0.1.3...0.1.2)
+
+## [0.1.3](https://github.com/Ahiiia92/CRMapp/tree/0.1.3) (2022-10-15)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.1.2...0.1.3)
+
+## [v0.1.2](https://github.com/Ahiiia92/CRMapp/tree/v0.1.2) (2022-10-13)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.1.0...v0.1.2)
+
 ## [v0.1.0](https://github.com/Ahiiia92/CRMapp/tree/v0.1.0) (2022-10-13)
 
-[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/9c3ec05901ea89026eb5604ee1222665672bb98d...v0.1.0)
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/v0.1.1...v0.1.0)
+
+**Merged pull requests:**
+
+- Create manual.yml [\#17](https://github.com/Ahiiia92/CRMapp/pull/17) ([Ahiiia92](https://github.com/Ahiiia92))
+
+## [v0.1.1](https://github.com/Ahiiia92/CRMapp/tree/v0.1.1) (2022-08-20)
+
+[Full Changelog](https://github.com/Ahiiia92/CRMapp/compare/9c3ec05901ea89026eb5604ee1222665672bb98d...v0.1.1)
 
 **Closed issues:**
 
@@ -13,7 +77,6 @@
 
 **Merged pull requests:**
 
-- Create manual.yml [\#17](https://github.com/Ahiiia92/CRMapp/pull/17) ([Ahiiia92](https://github.com/Ahiiia92))
 - Feature/add spring actuator [\#16](https://github.com/Ahiiia92/CRMapp/pull/16) ([Ahiiia92](https://github.com/Ahiiia92))
 - initialized UserController for login [\#15](https://github.com/Ahiiia92/CRMapp/pull/15) ([Ahiiia92](https://github.com/Ahiiia92))
 - Fix: first fix of spring boot security [\#14](https://github.com/Ahiiia92/CRMapp/pull/14) ([Ahiiia92](https://github.com/Ahiiia92))
