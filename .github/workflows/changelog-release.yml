@@ -19,6 +19,7 @@ on:
         description: 'Which tag do we want to release on?'
         required: true
         type: string
+
   pull_request:
     branches:
       - master
@@ -27,7 +28,7 @@ on:
 
 jobs:
   gh-release:
-    if: startsWith(github.ref, 'refs/tags/')
+    #if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       # - name: Release
