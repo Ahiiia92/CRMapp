@@ -15,10 +15,6 @@ on:
         description: 'True to print to STDOUT'
         required: true
         type: boolean
-      tags:
-        description: 'Which tag do we want to release on?'
-        required: true
-        type: string
 
   pull_request:
     branches:
