@@ -16,7 +16,8 @@
   </h3>
 </div>
 
-[![Changelog and Github Release](https://github.com/Ahiiia92/CRMapp/actions/workflows/changelog-release.yml/badge.svg?branch=master)](https://github.com/Ahiiia92/CRMapp/actions/workflows/changelog-release.yml)
+[![Changelog](https://github.com/Ahiiia92/CRMapp/actions/workflows/changelog.yaml/badge.svg?branch=master)](https://github.com/Ahiiia92/CRMapp/actions/workflows/changelog.yaml)
+
 
 ## Table of Contents
 
